@@ -1,6 +1,5 @@
 __author__ = 'jkamuda'
 
-import pygame
 import constants
 from spritesheet import SpriteSheet
 from tools import *

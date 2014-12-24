@@ -37,4 +37,5 @@ class Level():
     def update(self):
         ground_collisions = pygame.sprite.spritecollideany(self.player, self.ground_group)
         if ground_collisions:
-            print "ground collision"
+            self.player.y = constants.GROUND_HEIGHT
+            self.player.y_vel = 0
