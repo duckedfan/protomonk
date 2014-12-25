@@ -3,11 +3,12 @@ __author__ = 'Admin'
 import pygame
 import constants
 from platform import Platform
-from tools import *
+from utils import *
 
 
 class Level():
 
+    world_shift = 0
     background = None
     player = None
 
@@ -32,7 +33,10 @@ class Level():
 
     def draw(self, screen):
         screen.fill(constants.BLUE)
-        screen.blit(self.background, (0, 0))
+        screen.blit(self.background, (self.world_shift // 2, 0))
+
+    def shift_world(self, shift):
+        self.world_shift += shift
 
     def update(self):
         ground_collisions = pygame.sprite.spritecollideany(self.player, self.ground_group)

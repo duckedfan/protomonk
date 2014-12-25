@@ -2,7 +2,8 @@ __author__ = 'jkamuda'
 
 import constants
 from spritesheet import SpriteSheet
-from tools import *
+from utils import *
+
 
 class Player(pygame.sprite.Sprite):
 
@@ -17,12 +18,12 @@ class Player(pygame.sprite.Sprite):
 
     direction = "R"
 
-    def __init__(self):
+    def __init__(self, sound_manager):
         pygame.sprite.Sprite.__init__(self)
 
-        self.sprite_sheet = SpriteSheet("data\characters.gif")
-        image = self.sprite_sheet.get_image(238, 1, 18, 32)
+        self.sound_manager = sound_manager
 
+        self.sprite_sheet = SpriteSheet("data\characters.gif")
         image = self.sprite_sheet.get_image(238, 1, 18, 32)
         image = scale_image(image, constants.IMG_MULTIPLIER)
 
@@ -116,6 +117,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.y_vel == 0:
             self.y_vel = -10
+            self.sound_manager.play_sound(constants.SOUND_SMALL_JUMP)
 
     def stop(self):
         self.x_vel = 0
