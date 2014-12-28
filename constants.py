@@ -4,10 +4,12 @@ __author__ = 'jkamuda'
 Global constants
 """
 
+DEBUG = False
+
 # Colors
 BLACK  = (  0,   0,   0)
 WHITE  = (255, 255, 255)
-BLUE   = (255, 255, 255)
+BLUE   = (  0,   0, 255)
 
 # Screen dimensions
 SCREEN_WIDTH = 800
@@ -49,3 +51,18 @@ MUSIC_MAIN_THEME_SPED_UP = 'main_theme_sped_up'
 MUSIC_OUT_OF_TIME = 'out_of_time'
 MUSIC_STAGE_CLEAR = 'stage_clear'
 MUSIC_WORLD_CLEAR = 'world_clear'
+
+# Player states
+STATE_STANDING = 'standing'
+STATE_WALKING = 'walking'
+STATE_JUMPING = 'jumping'
+STATE_FALLING = 'falling'
+
+# Object dimensions
+PIPE_W = 80
+PIPE_SMALL_H = 80
+PIPE_MED_H = 120
+PIPE_LARGE_H = 160
+
+BRICK_W = 40
+BRICK_H = 40

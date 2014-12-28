@@ -17,7 +17,8 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("NES Mario")
+    caption = 'NES Mario'
+    pygame.display.set_caption(caption)
 
     sound_manager = SoundManager()
 
@@ -34,6 +35,7 @@ def main():
     level = Level(player)
 
     sound_manager.play_music(constants.MUSIC_MAIN_THEME)
+    world_shift = 0
 
     while running:
         for event in pygame.event.get():
@@ -60,16 +62,31 @@ def main():
         if player.rect.right >= constants.SCREEN_WIDTH_MID:
             diff = player.rect.right - constants.SCREEN_WIDTH_MID
             level.shift_world(-diff)
+            player.shift(diff)
+            world_shift += diff
             player.rect.right = constants.SCREEN_WIDTH_MID
 
-        if player.rect.left <= constants.SCREEN_WIDTH_START:
-            player.rect.left = constants.SCREEN_WIDTH_START
+        #if player.rect.left <= constants.SCREEN_WIDTH_START:
+        #    player.rect.left = constants.SCREEN_WIDTH_START
+        if player.rect.left <= 120:
+            diff = 120 - player.rect.left
+            player.rect.left = 120
+            world_shift -= diff
+            level.shift_world(diff)
 
-        active_sprite_list.update()
-        level.update()
+        active_sprite_list.update(level)
+        #level.update()
 
         level.draw(screen)
         active_sprite_list.draw(screen)
+
+        # debug stuff
+        if constants.DEBUG:
+            print '(%d, %d)' % (player.rect.x + player.world_shift, player.rect.y)
+
+            fps = clock.get_fps()
+            caption_fps = "{} - {:.2f} FPS".format(caption, fps)
+            pygame.display.set_caption(caption_fps)
 
         # limit to 60 frames per second
         clock.tick(60)

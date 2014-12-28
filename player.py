@@ -7,6 +7,8 @@ from utils import *
 
 class Player(pygame.sprite.Sprite):
 
+    state = constants.STATE_STANDING
+
     jumping_frame_l = None
     jumping_frame_r = None
 
@@ -17,6 +19,8 @@ class Player(pygame.sprite.Sprite):
     walking_frames_r = []
 
     direction = "R"
+
+    world_shift = 0
 
     def __init__(self, sound_manager):
         pygame.sprite.Sprite.__init__(self)
@@ -79,11 +83,26 @@ class Player(pygame.sprite.Sprite):
         self.walking_frames_l.append(left_2)
         self.walking_frames_l.append(left_3)
 
-    def update(self):
+    def shift(self, shift):
+        self.world_shift += shift
+
+    def update(self, level):
         self.calc_gravity()
 
         self.rect.x += self.x_vel
+
+        ground_collisions_x = pygame.sprite.spritecollide(self, level.ground_group, False)
+        for platform in ground_collisions_x:
+            if self.x_vel > 0:
+                self.rect.right = platform.rect.left
+            elif self.x_vel < 0:
+                self.rect.left = platform.rect.right
+
         self.rect.y += self.y_vel
+        ground_collisions_y = pygame.sprite.spritecollideany(self, level.ground_group)
+        if ground_collisions_y:
+            self.rect.bottom = ground_collisions_y.rect.top
+            self.y_vel = 0
 
         if self.y_vel != 0:
             if self.direction == "R":
@@ -96,27 +115,29 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image = self.standing_frame_l
         elif self.direction == "R":
-            frame = (self.rect.x // 30) % len(self.walking_frames_r)
+            frame = ((self.rect.x + self.world_shift) // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
         else:
-            frame = (self.rect.x // 30) % len(self.walking_frames_l)
+            frame = ((self.rect.x + self.world_shift) // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
 
     def calc_gravity(self):
-        if self.y_vel != 0:
+        if self.y_vel == 0:
+            self.y_vel = 1
+        else:
             self.y_vel += .45
 
     def go_right(self):
-        self.x_vel = 3
+        self.x_vel = 30
         self.direction = "R"
 
     def go_left(self):
-        self.x_vel = -3
+        self.x_vel = -20
         self.direction = "L"
 
     def jump(self):
         if self.y_vel == 0:
-            self.y_vel = -10
+            self.y_vel += -15
             self.sound_manager.play_sound(constants.SOUND_SMALL_JUMP)
 
     def stop(self):
