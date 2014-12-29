@@ -58,6 +58,9 @@ STATE_WALKING = 'walking'
 STATE_JUMPING = 'jumping'
 STATE_FALLING = 'falling'
 
+DIR_LEFT = "left"
+DIR_RIGHT = "right"
+
 # Object dimensions
 PIPE_W = 80
 PIPE_SMALL_H = 80
@@ -66,3 +69,6 @@ PIPE_LARGE_H = 160
 
 BRICK_W = 40
 BRICK_H = 40
+
+PLAYER_ADULT_W = 18
+PLAYER_ADULT_H = 32

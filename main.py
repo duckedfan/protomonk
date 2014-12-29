@@ -10,6 +10,7 @@ from sound import SoundManager
 
 def main():
 
+    # Center window on screen
     os.environ['SDL_VIDEO_CENTERED'] = '1'
 
     pygame.init()
@@ -75,7 +76,6 @@ def main():
             level.shift_world(diff)
 
         active_sprite_list.update(level)
-        #level.update()
 
         level.draw(screen)
         active_sprite_list.draw(screen)
