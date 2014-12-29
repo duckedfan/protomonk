@@ -8,9 +8,9 @@ from utils import *
 class Player(pygame.sprite.Sprite):
 
     state = c.STATE_STANDING
-
+    power = c.POWER_SMALL
+    player_small_frames = {}
     player_frames = {}
-
     direction = c.DIR_RIGHT
 
     world_shift = 0
@@ -21,23 +21,55 @@ class Player(pygame.sprite.Sprite):
         self.sound_manager = sound_manager
 
         self.sprite_sheet = SpriteSheet("data\characters.gif")
-        image = self.sprite_sheet.get_image(238, 1, 18, 32)
-        image = scale_image(image, c.IMG_MULTIPLIER)
 
-        self.image = image
+        self.load_player_small_frames()
+        self.load_player_adult_frames()
+
+        self.image = self.get_player_frame(self.state, self.direction)
         self.rect = self.image.get_rect()
-
-        self.load_adult_frames()
 
         self.x_vel = 0
         self.y_vel = 0
 
-    def load_adult_frames(self):
+    def load_player_small_frames(self):
+        dir_keys = [c.DIR_LEFT, c.DIR_RIGHT]
+        self.player_small_frames[c.STATE_STANDING] = dict((key, []) for key in dir_keys)
+        self.player_small_frames[c.STATE_WALKING] = dict((key, []) for key in dir_keys)
+        self.player_small_frames[c.STATE_JUMPING] = dict((key, []) for key in dir_keys)
+
+        # Standing frames
+        self.player_small_frames[c.STATE_STANDING][c.DIR_LEFT].append(self.sprite_sheet.get_image(223, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+        self.player_small_frames[c.STATE_STANDING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(276, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+
+        # Jumping frames
+        self.player_small_frames[c.STATE_JUMPING][c.DIR_LEFT].append(self.sprite_sheet.get_image(142, 43, c.PLAYER_SMALL_JUMP_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+        self.player_small_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(355, 43, c.PLAYER_SMALL_JUMP_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+
+        # Walking frames
+        right_1 = self.sprite_sheet.get_image(291, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        right_2 = self.sprite_sheet.get_image(305, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        right_3 = self.sprite_sheet.get_image(321, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+
+        self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_1)
+        self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_2)
+        self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_3)
+
+        left_1 = self.sprite_sheet.get_image(208, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        left_2 = self.sprite_sheet.get_image(194, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        left_3 = self.sprite_sheet.get_image(178, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+
+        self.player_small_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_1)
+        self.player_small_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_2)
+        self.player_small_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_3)
+
+        pass
+
+    def load_player_adult_frames(self):
         dir_keys = [c.DIR_LEFT, c.DIR_RIGHT]
         self.player_frames[c.STATE_STANDING] = dict((key, []) for key in dir_keys)
         self.player_frames[c.STATE_WALKING] = dict((key, []) for key in dir_keys)
-        self.player_frames[c.STATE_FALLING] = dict((key, []) for key in dir_keys)
         self.player_frames[c.STATE_JUMPING] = dict((key, []) for key in dir_keys)
+        self.player_frames[c.STATE_CROUCHING] = dict((key, []) for key in dir_keys)
 
         # Standing frames
         self.player_frames[c.STATE_STANDING][c.DIR_LEFT].append(self.sprite_sheet.get_image(238, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
@@ -46,6 +78,10 @@ class Player(pygame.sprite.Sprite):
         # Jumping frames
         self.player_frames[c.STATE_JUMPING][c.DIR_LEFT].append(self.sprite_sheet.get_image(127, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
         self.player_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(368, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
+
+        # Crouching frames
+        self.player_frames[c.STATE_CROUCHING][c.DIR_LEFT].append(self.sprite_sheet.get_image(221, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
+        self.player_frames[c.STATE_CROUCHING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(276, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
 
         # Walking frames
         right_1 = self.sprite_sheet.get_image(295, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
@@ -66,7 +102,11 @@ class Player(pygame.sprite.Sprite):
 
     def get_player_frame(self, state, direction, position=0):
         frame_idx = position % len(self.player_frames[state][direction])
-        return self.player_frames[state][direction][frame_idx]
+
+        if self.power == c.POWER_SMALL:
+            return self.player_small_frames[state][direction][frame_idx]
+        else:
+            return self.player_frames[state][direction][frame_idx]
 
     def shift(self, shift):
         self.world_shift += shift
@@ -89,7 +129,9 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = ground_collisions_y.rect.top
             self.y_vel = 0
 
-        if self.y_vel != 0:
+        if self.state == c.STATE_CROUCHING:
+            self.image = self.get_player_frame(self.state, self.direction)
+        elif self.y_vel != 0:
             self.image = self.get_player_frame(c.STATE_JUMPING, self.direction)
         elif self.x_vel == 0:
             self.image = self.get_player_frame(c.STATE_STANDING, self.direction)
@@ -105,15 +147,23 @@ class Player(pygame.sprite.Sprite):
     def go_right(self):
         self.x_vel = 30
         self.direction = c.DIR_RIGHT
+        self.state = c.STATE_WALKING
 
     def go_left(self):
         self.x_vel = -20
         self.direction = c.DIR_LEFT
+        self.state = c.STATE_WALKING
 
     def jump(self):
         if self.y_vel == 0:
             self.y_vel += -15
             self.sound_manager.play_sound(c.SOUND_SMALL_JUMP)
+            self.state = c.STATE_JUMPING
+
+    def crouch(self):
+        if self.power != c.POWER_SMALL and self.y_vel == 0 and self.x_vel == 0:
+            self.state = c.STATE_CROUCHING
 
     def stop(self):
         self.x_vel = 0
+        self.state = c.STATE_STANDING

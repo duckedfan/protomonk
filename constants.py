@@ -57,6 +57,12 @@ STATE_STANDING = 'standing'
 STATE_WALKING = 'walking'
 STATE_JUMPING = 'jumping'
 STATE_FALLING = 'falling'
+STATE_CROUCHING = 'crouching'
+
+POWER_SMALL = 'small'
+POWER_LARGE = 'large'
+POWER_FIREBALL = 'fireball'
+POWER_INVINCIBLE = 'invincible'
 
 DIR_LEFT = "left"
 DIR_RIGHT = "right"
@@ -71,4 +77,7 @@ BRICK_W = 40
 BRICK_H = 40
 
 PLAYER_ADULT_W = 18
+PLAYER_SMALL_W = 14
+PLAYER_SMALL_JUMP_W = 16
 PLAYER_ADULT_H = 32
+PLAYER_SMALL_H = 17

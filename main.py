@@ -51,6 +51,8 @@ def main():
                     player.go_right()
                 if key == pygame.K_UP:
                     player.jump()
+                if key == pygame.K_DOWN:
+                    player.crouch()
                 if key == pygame.K_ESCAPE or key == pygame.K_q:
                     running = False
 
@@ -58,6 +60,8 @@ def main():
                 if event.key == pygame.K_LEFT and player.x_vel < 0:
                     player.stop()
                 if event.key == pygame.K_RIGHT and player.x_vel > 0:
+                    player.stop()
+                if event.key == pygame.K_DOWN:
                     player.stop()
 
         if player.rect.right >= constants.SCREEN_WIDTH_MID:
