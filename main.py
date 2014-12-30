@@ -39,6 +39,8 @@ def main():
     world_shift = 0
 
     while running:
+        current_time = pygame.time.get_ticks()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -53,6 +55,10 @@ def main():
                     player.jump()
                 if key == pygame.K_DOWN:
                     player.crouch()
+                if key == pygame.K_a:
+                    player.transition(constants.POWER_LARGE)
+                if key == pygame.K_s:
+                    player.transition(constants.POWER_SMALL)
                 if key == pygame.K_ESCAPE or key == pygame.K_q:
                     running = False
 
@@ -79,7 +85,7 @@ def main():
             world_shift -= diff
             level.shift_world(diff)
 
-        active_sprite_list.update(level)
+        active_sprite_list.update(level, current_time)
 
         level.draw(screen)
         active_sprite_list.draw(screen)
