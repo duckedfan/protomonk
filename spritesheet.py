@@ -9,7 +9,7 @@ class SpriteSheet():
     sprite_sheet = None
 
     def __init__(self, filename):
-        self.sprite_sheet = pygame.image.load(filename).convert()
+        self.sprite_sheet = pygame.image.load(filename).convert_alpha()
 
     def get_image(self, x, y, width, height, scale=1):
         image = pygame.Surface([width, height]).convert()
@@ -20,7 +20,7 @@ class SpriteSheet():
         return image
 
     def get_image_v2(self, rect, scale=1):
-        image = pygame.Surface([rect[2], rect[3]]).convert()
+        image = pygame.Surface([rect[2], rect[3]], pygame.SRCALPHA, 32).convert_alpha()
         image.blit(self.sprite_sheet, (0, 0), rect)
         image.set_colorkey(constants.BLACK)
         if scale != 1:

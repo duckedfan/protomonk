@@ -57,7 +57,7 @@ class Game():
                         running = False
 
             menu.draw(self.screen)
-            overhead_info.draw(self.screen)
+            overhead_info.draw(self.screen, current_time)
 
             # limit to 60 frames per second
             clock.tick(60)

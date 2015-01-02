@@ -9,6 +9,8 @@ import coordinates as coords
 class Overhead():
 
     coin_frames = []
+    coin_frame_idx = 0
+    coin_time = 0
 
     points = 0
     coins = 0
@@ -20,18 +22,13 @@ class Overhead():
         self.text_helper = TextHelper()
 
         # tile_set.png
-        tileset_ss = SpriteSheet("data/tile_set.png")
-        tileset = tileset_ss.get_image_v2((0, 0, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT), constants.IMG_MULTIPLIER)
-        tileset.set_colorkey(constants.WHITE)
+        item_objects_ss = SpriteSheet("data/item_objects.png")
 
-        coin_frame_1 = tileset_ss.get_image_v2(coords.COIN_1)
-        coin_frame_1.set_colorkey(constants.WHITE)
-        self.coin_frames.append(coin_frame_1)
-        self.coin_frames.append(tileset_ss.get_image_v2(coords.COIN_2))
-        self.coin_frames.append(tileset_ss.get_image_v2(coords.COIN_3))
+        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_1, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_2, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_3, constants.IMG_MULTIPLIER))
 
-
-    def draw(self, screen):
+    def draw(self, screen, current_time):
         # Mario
         screen.blit(self.text_helper.get_text('m'), (50, 20))
         screen.blit(self.text_helper.get_text('a'), (70, 20))
@@ -48,7 +45,13 @@ class Overhead():
         screen.blit(self.text_helper.get_text('0'), (150, 40))
 
         # Coins
-        screen.blit(self.coin_frames[0], (260, 40))
+        coin_time_delta = current_time - self.coin_time
+        if coin_time_delta > 250:
+            self.coin_time = current_time
+            self.coin_frame_idx += 1
+            if self.coin_frame_idx >= 3:
+                self.coin_frame_idx = 0
+        screen.blit(self.coin_frames[self.coin_frame_idx], (268, 38))
 
         # TODO fix the dimensions for the non-char characters!
         screen.blit(self.text_helper.get_text('+'), (284, 44))

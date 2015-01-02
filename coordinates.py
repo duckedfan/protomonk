@@ -47,7 +47,9 @@ XXX = (76, 248, 5, 5)
 
 EXCLAIMATION = (94, 246, 4, 8)
 
-# tile_set.png
-COIN_1 = (387, 18, 10, 14)
-COIN_2 = (403, 18, 10, 14)
-COIN_3 = (419, 18, 10, 14)
+# item_objects.png
+TITLE_COIN_1 = (1, 160, 5, 8)
+TITLE_COIN_2 = (9, 160, 5, 8)
+TITLE_COIN_3 = (17, 160, 5, 8)
+
+TITLE_SELECTOR = (24, 160, 8, 8)
