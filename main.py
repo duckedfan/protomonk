@@ -6,7 +6,7 @@ import constants
 from level import Level
 from player import Player
 from sound import SoundManager
-
+from game import Game
 
 def main():
 
@@ -108,4 +108,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
+    game = Game()
+    game.run()

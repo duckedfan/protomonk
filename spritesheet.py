@@ -18,3 +18,11 @@ class SpriteSheet():
         if scale != 1:
             image = scale_image(image, scale)
         return image
+
+    def get_image_v2(self, rect, scale=1):
+        image = pygame.Surface([rect[2], rect[3]]).convert()
+        image.blit(self.sprite_sheet, (0, 0), rect)
+        image.set_colorkey(constants.BLACK)
+        if scale != 1:
+            image = scale_image(image, scale)
+        return image

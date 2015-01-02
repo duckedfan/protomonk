@@ -1,6 +1,5 @@
 __author__ = 'Admin'
 
-import pygame
 import constants
 from platform import Platform
 from utils import *
