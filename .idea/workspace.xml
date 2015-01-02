@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="575ff6e0-8601-47a5-9c49-9896cc0e325c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coordinates.py" afterPath="$PROJECT_DIR$/coordinates.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.py" afterPath="$PROJECT_DIR$/game.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/overhead.py" afterPath="$PROJECT_DIR$/overhead.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spritesheet.py" afterPath="$PROJECT_DIR$/spritesheet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menu.py" afterPath="$PROJECT_DIR$/menu.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="protomonk_git.iws" />
@@ -54,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="menu.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/menu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1258">
-              <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.36956522" vertical-offset="0" max-vertical-offset="1479">
+              <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
               <folding>
                 <element signature="e#24#59#0" expanded="true" />
               </folding>
@@ -66,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overhead.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="overhead.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/overhead.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73913044" vertical-offset="34" max-vertical-offset="1513">
-              <caret line="26" column="108" selection-start-line="26" selection-start-column="108" selection-end-line="26" selection-end-column="108" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1513">
+              <caret line="26" column="108" selection-start-line="24" selection-start-column="8" selection-end-line="26" selection-end-column="108" />
               <folding>
                 <element signature="e#24#57#0" expanded="true" />
               </folding>
@@ -168,13 +165,13 @@
         <option value="$PROJECT_DIR$/main2.py" />
         <option value="$PROJECT_DIR$/info.py" />
         <option value="$PROJECT_DIR$/constants.py" />
-        <option value="$PROJECT_DIR$/menu.py" />
         <option value="$PROJECT_DIR$/texthelper.py" />
         <option value="$PROJECT_DIR$/coordinates.py" />
         <option value="$PROJECT_DIR$/game.py" />
         <option value="$PROJECT_DIR$/spritesheet.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/overhead.py" />
+        <option value="$PROJECT_DIR$/menu.py" />
       </list>
     </option>
   </component>
@@ -505,7 +502,13 @@
       <option name="project" value="LOCAL" />
       <updated>1420182221736</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="coin animation in the menu working">
+      <created>1420214366242</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1420214366242</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -556,7 +559,8 @@
     <MESSAGE value="- Added way to transition from small to big" />
     <MESSAGE value="Additional work on menu started" />
     <MESSAGE value="more of the menu built out" />
-    <option name="LAST_COMMIT_MESSAGE" value="more of the menu built out" />
+    <MESSAGE value="coin animation in the menu working" />
+    <option name="LAST_COMMIT_MESSAGE" value="coin animation in the menu working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -968,26 +972,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/menu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1258">
-          <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
-          <folding>
-            <element signature="e#24#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1454" max-vertical-offset="2006">
-          <caret line="111" column="5" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
-          <folding>
-            <element signature="e#24#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="1292">
@@ -1008,12 +992,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1454" max-vertical-offset="2006">
+          <caret line="111" column="5" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
+          <folding>
+            <element signature="e#24#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/overhead.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73913044" vertical-offset="34" max-vertical-offset="1513">
-          <caret line="26" column="108" selection-start-line="26" selection-start-column="108" selection-end-line="26" selection-end-column="108" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1513">
+          <caret line="26" column="108" selection-start-line="24" selection-start-column="8" selection-end-line="26" selection-end-column="108" />
           <folding>
             <element signature="e#24#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/menu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36956522" vertical-offset="0" max-vertical-offset="1479">
+          <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
           </folding>
         </state>
       </provider>

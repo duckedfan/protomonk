@@ -3,9 +3,16 @@ __author__ = 'jkamuda'
 from spritesheet import SpriteSheet
 import constants
 from texthelper import TextHelper
-
+import coordinates as coords
 
 class Menu():
+
+    PLAYER_1_SELECTED_RECT = (250, 348)
+    PLAYER_2_SELECTED_RECT = (250, 390)
+
+    selected_player_rect = PLAYER_1_SELECTED_RECT
+
+    selector_frame = None
 
     background = None
     title = None
@@ -15,6 +22,9 @@ class Menu():
     def __init__(self):
         self.init_background()
         self.text_helper = TextHelper()
+
+        item_objects_ss = SpriteSheet("data/item_objects.png")
+        self.selector_frame = item_objects_ss.get_image_v2(coords.TITLE_SELECTOR, constants.IMG_MULTIPLIER)
 
     def init_background(self):
         # Background
@@ -65,4 +75,7 @@ class Menu():
         screen.blit(self.text_helper.get_text('a'), (500, 390))
         screen.blit(self.text_helper.get_text('m'), (520, 390))
         screen.blit(self.text_helper.get_text('e'), (540, 390))
+
+        # Selector
+        screen.blit(self.selector_frame, self.selected_player_rect)
 
