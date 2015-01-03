@@ -9,12 +9,15 @@ from menu import Menu
 from overhead import Overhead
 from game_state import GameState
 from load_screen import LoadScreen
+from game_info import GameInfo
+from mario_game import MarioGame
 
 
 class Game():
     screen = None
     caption = 'NES Mario'
     sound_manager = None
+    game_info = None
 
     def __init__(self):
         # Center window on screen
@@ -25,13 +28,16 @@ class Game():
         size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
         self.screen = pygame.display.set_mode(size)
 
+        self.game_info = GameInfo()
         self.sound_manager = SoundManager()
 
     def get_game_state(self, game_state):
         if game_state == GameState.STATE_MENU:
             return Menu()
-        if game_state == GameState.STATE_LOAD:
-            return LoadScreen()
+        elif game_state == GameState.STATE_LOAD:
+            return LoadScreen(self.game_info)
+        elif game_state == GameState.STATE_GAME:
+            return MarioGame(self.game_info, self.sound_manager)
 
     def run(self):
         pygame.display.set_caption(self.caption)

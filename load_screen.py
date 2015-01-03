@@ -16,10 +16,10 @@ class LoadScreen(GameState):
     text_helper = None
     game_info = None
 
-    def __init__(self):
-        GameState.__init__(self, GameState.STATE_LOAD, GameState.STATE_MENU)
+    def __init__(self, game_info):
+        GameState.__init__(self, GameState.STATE_LOAD, GameState.STATE_GAME)
 
-        #self.game_info = game_info
+        self.game_info = game_info
         self.text_helper = TextHelper()
 
         # Mario frame
@@ -41,12 +41,11 @@ class LoadScreen(GameState):
         screen.blit(self.text_helper.get_text('l'), (340, 200))
         screen.blit(self.text_helper.get_text('d'), (360, 200))
 
-        screen.blit(self.text_helper.get_text('1'), (420, 200))
+        screen.blit(self.text_helper.get_text(str(self.game_info.world)), (420, 200))
         screen.blit(self.text_helper.get_text('-'), (440, 205))
-        screen.blit(self.text_helper.get_text('1'), (460, 200))
+        screen.blit(self.text_helper.get_text(str(self.game_info.level)), (460, 200))
 
         screen.blit(self.text_helper.get_text('+'), (390, 270))
 
         screen.blit(self.mario_frame, (320, 250))
-
-        screen.blit(self.text_helper.get_text('3'), (430, 265))
+        screen.blit(self.text_helper.get_text(str(self.game_info.num_lives)), (430, 265))
