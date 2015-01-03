@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="575ff6e0-8601-47a5-9c49-9896cc0e325c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.py" afterPath="$PROJECT_DIR$/game.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menu.py" afterPath="$PROJECT_DIR$/menu.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spritesheet.py" afterPath="$PROJECT_DIR$/spritesheet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/texthelper.py" afterPath="$PROJECT_DIR$/texthelper.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="protomonk_git.iws" />
@@ -57,8 +53,8 @@
       <file leaf-file-name="load_screen.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/load_screen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23880596" vertical-offset="110" max-vertical-offset="646">
-              <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.14722754" vertical-offset="110" max-vertical-offset="646">
+              <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
               <folding>
                 <element signature="e#24#56#0" expanded="true" />
               </folding>
@@ -515,7 +511,13 @@
       <option name="project" value="LOCAL" />
       <updated>1420246835243</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Enabled support for different game states">
+      <created>1420265653217</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1420265653217</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -531,7 +533,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32784638" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32784638" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22776572" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22776572" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970226" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26337448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -569,7 +571,8 @@
     <MESSAGE value="coin animation in the menu working" />
     <MESSAGE value="menu selector placed" />
     <MESSAGE value="menu selector actually working" />
-    <option name="LAST_COMMIT_MESSAGE" value="menu selector actually working" />
+    <MESSAGE value="Enabled support for different game states" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enabled support for different game states" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1024,8 +1027,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/load_screen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23880596" vertical-offset="110" max-vertical-offset="646">
-          <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.14722754" vertical-offset="110" max-vertical-offset="646">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
           <folding>
             <element signature="e#24#56#0" expanded="true" />
           </folding>
