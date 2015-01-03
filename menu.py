@@ -4,13 +4,14 @@ from spritesheet import SpriteSheet
 import constants
 from texthelper import TextHelper
 import coordinates as coords
+import pygame
 
 class Menu():
 
+    player_num = 1
+
     PLAYER_1_SELECTED_RECT = (250, 348)
     PLAYER_2_SELECTED_RECT = (250, 390)
-
-    selected_player_rect = PLAYER_1_SELECTED_RECT
 
     selector_frame = None
 
@@ -40,6 +41,15 @@ class Menu():
         self.title_rect = self.title.get_rect()
         self.title_rect.centerx = constants.SCREEN_WIDTH_MID
         self.title_rect.centery = 200
+
+    def process_events(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                key = event.key
+                if key == pygame.K_UP:
+                    self.player_num = 1
+                if key == pygame.K_DOWN:
+                    self.player_num = 2
 
     def draw(self, screen):
         screen.fill(constants.WHITE)
@@ -77,5 +87,8 @@ class Menu():
         screen.blit(self.text_helper.get_text('e'), (540, 390))
 
         # Selector
-        screen.blit(self.selector_frame, self.selected_player_rect)
+        if self.player_num == 1:
+            screen.blit(self.selector_frame, self.PLAYER_1_SELECTED_RECT)
+        else:
+            screen.blit(self.selector_frame, self.PLAYER_2_SELECTED_RECT)
 

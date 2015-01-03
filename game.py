@@ -47,7 +47,8 @@ class Game():
         while running:
             current_time = pygame.time.get_ticks()
 
-            for event in pygame.event.get():
+            events = pygame.event.get()
+            for event in events:
                 if event.type == pygame.QUIT:
                     running = False
 
@@ -55,6 +56,8 @@ class Game():
                     key = event.key
                     if key == pygame.K_ESCAPE or key == pygame.K_q:
                         running = False
+
+            menu.process_events(events)
 
             menu.draw(self.screen)
             overhead_info.draw(self.screen, current_time)
