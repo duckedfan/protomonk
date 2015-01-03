@@ -61,7 +61,7 @@ class TextHelper():
         for key in self.text_dict:
             image = self.text_dict[key]
             image = utils.scale_image(image, constants.IMG_MULTIPLIER)
-            image.set_colorkey((92, 148, 252))
+            image.set_colorkey(self.color_key)
             self.text_dict[key] = image
 
     def get_text(self, key):

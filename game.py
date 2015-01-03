@@ -7,10 +7,11 @@ from player import Player
 from sound import SoundManager
 from menu import Menu
 from overhead import Overhead
+from game_state import GameState
+from load_screen import LoadScreen
 
 
 class Game():
-
     screen = None
     caption = 'NES Mario'
     sound_manager = None
@@ -26,6 +27,12 @@ class Game():
 
         self.sound_manager = SoundManager()
 
+    def get_game_state(self, game_state):
+        if game_state == GameState.STATE_MENU:
+            return Menu()
+        if game_state == GameState.STATE_LOAD:
+            return LoadScreen()
+
     def run(self):
         pygame.display.set_caption(self.caption)
 
@@ -39,13 +46,16 @@ class Game():
 
         active_sprite_list.add(player)
 
-        self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
+        #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
         overhead_info = Overhead()
-        menu = Menu()
+        game_state = self.get_game_state(GameState.STATE_MENU)
 
         while running:
-            current_time = pygame.time.get_ticks()
+            game_time = pygame.time.get_ticks()
+
+            if game_state.switch_state():
+                game_state = self.get_game_state(game_state.next)
 
             events = pygame.event.get()
             for event in events:
@@ -57,10 +67,12 @@ class Game():
                     if key == pygame.K_ESCAPE or key == pygame.K_q:
                         running = False
 
-            menu.process_events(events)
+            game_state.process_events(events)
 
-            menu.draw(self.screen)
-            overhead_info.draw(self.screen, current_time)
+            game_state.update(game_time)
+
+            game_state.draw(self.screen)
+            overhead_info.draw(self.screen, game_time)
 
             # limit to 60 frames per second
             clock.tick(60)
@@ -69,5 +81,3 @@ class Game():
             pygame.display.flip()
 
         pygame.quit()
-
-

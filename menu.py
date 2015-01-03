@@ -1,17 +1,19 @@
 __author__ = 'jkamuda'
 
-from spritesheet import SpriteSheet
-import constants
-from texthelper import TextHelper
-import coordinates as coords
 import pygame
+import constants
+import coordinates as coords
+from spritesheet import SpriteSheet
+from texthelper import TextHelper
+from game_state import GameState
 
-class Menu():
+
+class Menu(GameState):
 
     player_num = 1
 
     PLAYER_1_SELECTED_RECT = (250, 348)
-    PLAYER_2_SELECTED_RECT = (250, 390)
+    PLAYER_2_SELECTED_RECT = (250, 389)
 
     selector_frame = None
 
@@ -21,6 +23,8 @@ class Menu():
     text_helper = None
 
     def __init__(self):
+        GameState.__init__(self, GameState.STATE_MENU, GameState.STATE_LOAD)
+
         self.init_background()
         self.text_helper = TextHelper()
 
@@ -50,6 +54,8 @@ class Menu():
                     self.player_num = 1
                 if key == pygame.K_DOWN:
                     self.player_num = 2
+                if key == pygame.K_RETURN:
+                    self.switch = True
 
     def draw(self, screen):
         screen.fill(constants.WHITE)
