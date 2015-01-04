@@ -12,13 +12,11 @@ class Overhead():
     coin_frame_idx = 0
     coin_time = 0
 
-    points = 0
-    coins = 0
-    level = 1
-    episode = 1
-    time = None
+    game_info = None
 
-    def __init__(self):
+    def __init__(self, game_info):
+        self.game_info = game_info
+
         self.text_helper = TextHelper()
 
         # tile_set.png
@@ -28,7 +26,15 @@ class Overhead():
         self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_2, constants.IMG_MULTIPLIER))
         self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_3, constants.IMG_MULTIPLIER))
 
-    def draw(self, screen, current_time):
+    def update(self, game_time):
+        coin_time_delta = game_time - self.coin_time
+        if coin_time_delta > 250:
+            self.coin_time = game_time
+            self.coin_frame_idx += 1
+            if self.coin_frame_idx >= 3:
+                self.coin_frame_idx = 0
+
+    def draw(self, screen):
         # Mario
         screen.blit(self.text_helper.get_text('m'), (50, 20))
         screen.blit(self.text_helper.get_text('a'), (70, 20))
@@ -45,12 +51,6 @@ class Overhead():
         screen.blit(self.text_helper.get_text('0'), (150, 40))
 
         # Coins
-        coin_time_delta = current_time - self.coin_time
-        if coin_time_delta > 250:
-            self.coin_time = current_time
-            self.coin_frame_idx += 1
-            if self.coin_frame_idx >= 3:
-                self.coin_frame_idx = 0
         screen.blit(self.coin_frames[self.coin_frame_idx], (268, 38))
 
         # TODO fix the dimensions for the non-char characters!
@@ -77,8 +77,21 @@ class Overhead():
         screen.blit(self.text_helper.get_text('e'), (670, 20))
 
         # Time (reported)
-        if self.time:
-            screen.blit(self.text_helper.get_text('t'), (610, 40))
+        self.draw_timer(screen)
 
-    def animation(self):
-        pass
+    def draw_timer(self, screen):
+        if self.game_info.timer is None:
+            return
+        timer_time = self.game_info.get_timer_in_seconds()
+
+        singles = timer_time % 10
+        timer_time = int(timer_time / 10)
+
+        tenths = timer_time % 10
+        timer_time = int(timer_time / 10)
+
+        hundredths = timer_time % 10
+
+        screen.blit(self.text_helper.get_text(str(hundredths)), (630, 40))
+        screen.blit(self.text_helper.get_text(str(tenths)), (650, 40))
+        screen.blit(self.text_helper.get_text(str(singles)), (670, 40))

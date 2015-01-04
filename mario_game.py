@@ -17,26 +17,25 @@ class MarioGame(GameState):
 
     world_shift = 0
 
-    mario_game_timer = -1
+    mario_game_time = -1
 
     level = None
 
     def __init__(self, game_info, sound_manager):
-        GameState.__init__(self, GameState.STATE_GAME, GameState.STATE_MENU)
+        GameState.__init__(self, GameState.STATE_GAME, GameState.STATE_LOAD)
 
         self.game_info = game_info
         self.sound_manager = sound_manager
 
-        self.player = Player(self.sound_manager)
+        self.game_info.set_timer_in_seconds(300)
 
-        self.player.rect.x = 100
-        self.player.rect.bottom = constants.GROUND_HEIGHT
+        self.player = Player(self.sound_manager)
 
         self.active_sprite_list = pygame.sprite.Group()
         self.active_sprite_list.add(self.player)
 
         self.level = Level(self.player)
-
+        
         self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
     def process_events(self, events):
@@ -68,6 +67,12 @@ class MarioGame(GameState):
                     self.player.stop()
 
     def update(self, game_time):
+        if self.mario_game_time == -1:
+            self.mario_game_time = game_time
+        else:
+            self.game_info.timer -= (game_time - self.mario_game_time)
+            self.mario_game_time = game_time
+
         if self.player.rect.right >= constants.SCREEN_WIDTH_MID:
             diff = self.player.rect.right - constants.SCREEN_WIDTH_MID
             self.level.shift_world(-diff)
@@ -82,6 +87,10 @@ class MarioGame(GameState):
             self.player.rect.left = 120
             self.world_shift -= diff
             self.level.shift_world(diff)
+
+        if self.player.rect.bottom > constants.SCREEN_HEIGHT:
+            self.sound_manager.stop()
+            self.switch = True
 
         self.active_sprite_list.update(self.level, game_time)
 

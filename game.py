@@ -54,7 +54,7 @@ class Game():
 
         #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
-        overhead_info = Overhead()
+        overhead_info = Overhead(self.game_info)
         game_state = self.get_game_state(GameState.STATE_MENU)
 
         while running:
@@ -75,10 +75,11 @@ class Game():
 
             game_state.process_events(events)
 
+            overhead_info.update(game_time)
             game_state.update(game_time)
 
             game_state.draw(self.screen)
-            overhead_info.draw(self.screen, game_time)
+            overhead_info.draw(self.screen)
 
             # limit to 60 frames per second
             clock.tick(60)

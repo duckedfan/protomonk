@@ -33,6 +33,8 @@ class Player(pygame.sprite.Sprite):
         self.image = self.get_player_frame(self.state, self.direction)
         self.rect = self.image.get_rect()
 
+        self.rect.left = 100
+
         self.x_vel = 0
         self.y_vel = 0
 

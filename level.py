@@ -24,6 +24,7 @@ class Level():
 
         self.init_platforms()
 
+
     def init_platforms(self):
 
         # Ground
