@@ -3,6 +3,8 @@ __author__ = 'jkamuda'
 # characters.gif
 MARIO_SMALL_STANDING_RIGHT = (276, 43, 14, 17)
 
+MARIO_DEAD = (13, 46, 14, 14)
+
 # text_images.png
 NUM_0 = (3, 230, 7, 7)
 NUM_1 = (12, 230, 6, 7)

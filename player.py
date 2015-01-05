@@ -3,6 +3,7 @@ __author__ = 'jkamuda'
 import constants as c
 from spritesheet import SpriteSheet
 from utils import *
+import coordinates
 
 
 class Player(pygame.sprite.Sprite):
@@ -16,6 +17,8 @@ class Player(pygame.sprite.Sprite):
     player_small_frames = {}
     player_frames = {}
     transition_frames = {}
+    death_frame = None
+
     direction = c.DIR_RIGHT
 
     world_shift = 0
@@ -56,6 +59,9 @@ class Player(pygame.sprite.Sprite):
         self.transition_frames = dict((key, []) for key in dir_keys)
         self.transition_frames[c.DIR_LEFT] = self.sprite_sheet.get_image(239, 36, c.PLAYER_MID_W, c.PLAYER_MID_H, c.IMG_MULTIPLIER)
         self.transition_frames[c.DIR_RIGHT] = self.sprite_sheet.get_image(258, 36, c.PLAYER_MID_W, c.PLAYER_MID_H, c.IMG_MULTIPLIER)
+
+        # Death frame
+        self.death_frame = self.sprite_sheet.get_image_v2(coordinates.MARIO_DEAD, c.IMG_MULTIPLIER)
 
         # Walking frames
         right_1 = self.sprite_sheet.get_image(291, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
@@ -134,6 +140,10 @@ class Player(pygame.sprite.Sprite):
                 self.small_to_big(current_time)
             elif self.transition_state == c.TRANSITION_BIG_TO_SMALL:
                 self.big_to_small(current_time)
+            elif self.transition_state == c.TRANSITION_DEATH_SEQUENCE:
+                self.death_sequence(current_time)
+                self.calc_gravity()
+                self.rect.y += self.y_vel
 
             self.refresh_rect()
             return
@@ -164,11 +174,29 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image = self.get_player_frame(c.STATE_WALKING, self.direction, (self.rect.x + self.world_shift) // 30)
 
+    def start_death_sequence(self):
+        self.sound_manager.play_music(c.MUSIC_DEATH)
+        self.state = c.STATE_TRANSITION
+        self.transition_state = c.TRANSITION_DEATH_SEQUENCE
+        self.y_vel += -15
+
     def calc_gravity(self):
         if self.y_vel == 0:
             self.y_vel = 1
         else:
             self.y_vel += .45
+
+    def death_sequence(self, current_time):
+        time_delta = current_time - self.transition_timer
+
+        self.image = self.death_frame
+
+        if self.transition_timer == 0:
+            self.transition_timer = current_time
+        elif time_delta > 3000:
+            self.state = c.STATE_DEAD
+        else:
+            self.transition_timer += 1
 
     def small_to_big(self, current_time):
         time_delta = current_time - self.transition_timer

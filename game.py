@@ -11,6 +11,7 @@ from game_state import GameState
 from load_screen import LoadScreen
 from game_info import GameInfo
 from mario_game import MarioGame
+from game_over_screen import GameOverScreen
 
 
 class Game():
@@ -33,11 +34,15 @@ class Game():
 
     def get_game_state(self, game_state):
         if game_state == GameState.STATE_MENU:
+            # TODO kind of an ugly place to put this reset...
+            self.game_info.reset()
             return Menu()
         elif game_state == GameState.STATE_LOAD:
             return LoadScreen(self.game_info)
         elif game_state == GameState.STATE_GAME:
             return MarioGame(self.game_info, self.sound_manager)
+        elif game_state == GameState.STATE_GAME_OVER:
+            return GameOverScreen(self.game_info, self.sound_manager)
 
     def run(self):
         pygame.display.set_caption(self.caption)
@@ -51,8 +56,6 @@ class Game():
         player.rect.bottom = constants.GROUND_HEIGHT
 
         active_sprite_list.add(player)
-
-        #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
         overhead_info = Overhead(self.game_info)
         game_state = self.get_game_state(GameState.STATE_MENU)
@@ -81,10 +84,10 @@ class Game():
             game_state.draw(self.screen)
             overhead_info.draw(self.screen)
 
-            # limit to 60 frames per second
+            # Limit to 60 frames per second
             clock.tick(60)
 
-            # update screen
+            # Update screen
             pygame.display.flip()
 
         pygame.quit()

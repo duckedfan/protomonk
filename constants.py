@@ -59,6 +59,7 @@ STATE_JUMPING = 'jumping'
 STATE_FALLING = 'falling'
 STATE_CROUCHING = 'crouching'
 STATE_TRANSITION = 'transition'
+STATE_DEAD = 'mario_dead_sad_face'
 
 POWER_SMALL = 'small'
 POWER_LARGE = 'large'
@@ -67,6 +68,7 @@ POWER_INVINCIBLE = 'invincible'
 
 TRANSITION_SMALL_TO_BIG = 'small_to_big'
 TRANSITION_BIG_TO_SMALL = 'big_to_small'
+TRANSITION_DEATH_SEQUENCE = 'death_sequence'
 
 DIR_LEFT = "left"
 DIR_RIGHT = "right"

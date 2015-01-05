@@ -54,6 +54,8 @@ class MarioGame(GameState):
                     self.player.transition(constants.POWER_LARGE)
                 if key == pygame.K_s:
                     self.player.transition(constants.POWER_SMALL)
+                if key == pygame.K_t:
+                    self.player.start_death_sequence()
                 if key == pygame.K_ESCAPE or key == pygame.K_q:
                     # TODO should be pause
                     pass
@@ -88,9 +90,14 @@ class MarioGame(GameState):
             self.world_shift -= diff
             self.level.shift_world(diff)
 
-        if self.player.rect.bottom > constants.SCREEN_HEIGHT:
-            self.sound_manager.stop()
+        if self.player.rect.bottom > constants.SCREEN_HEIGHT and self.player.transition_state is not constants.TRANSITION_DEATH_SEQUENCE:
+            self.player.start_death_sequence()
+
+        if self.player.state == constants.STATE_DEAD:
             self.switch = True
+            self.game_info.num_lives -= 1
+            if self.game_info.num_lives < 0:
+                self.set_next_state(GameState.STATE_GAME_OVER)
 
         self.active_sprite_list.update(self.level, game_time)
 

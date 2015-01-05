@@ -8,10 +8,7 @@ import coordinates as coords
 
 
 class LoadScreen(GameState):
-
     mario_frame = None
-
-    background = None
     load_screen_time = -1
     text_helper = None
     game_info = None
