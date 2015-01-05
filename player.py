@@ -23,10 +23,11 @@ class Player(pygame.sprite.Sprite):
 
     world_shift = 0
 
-    def __init__(self, sound_manager):
+    def __init__(self, sound_manager, game_info):
         pygame.sprite.Sprite.__init__(self)
 
         self.sound_manager = sound_manager
+        self.game_info = game_info
 
         self.sprite_sheet = SpriteSheet("data\characters.gif")
 
@@ -159,10 +160,46 @@ class Player(pygame.sprite.Sprite):
             elif self.x_vel < 0:
                 self.rect.left = platform.rect.right
 
+        coin_box_collisions_x = pygame.sprite.spritecollide(self, level.coin_box_group, False)
+        for coin_box in coin_box_collisions_x:
+            if self.x_vel > 0:
+                self.rect.right = coin_box.rect.left
+            elif self.x_vel < 0:
+                self.rect.left = coin_box.rect.right
+
+        brick_box_collisions_x = pygame.sprite.spritecollide(self, level.brick_box_group, False)
+        for brick_box in brick_box_collisions_x:
+            if self.x_vel > 0:
+                self.rect.right = brick_box.rect.left
+            elif self.x_vel < 0:
+                self.rect.left = brick_box.rect.right
+
         self.rect.y += self.y_vel
         ground_collisions_y = pygame.sprite.spritecollideany(self, level.ground_group)
         if ground_collisions_y:
             self.rect.bottom = ground_collisions_y.rect.top
+            self.y_vel = 0
+
+        coin_box_collisions_y = pygame.sprite.spritecollideany(self, level.coin_box_group)
+        if coin_box_collisions_y:
+            if self.y_vel < 0:
+                self.rect.top = coin_box_collisions_y.rect.bottom
+                points, coins = coin_box_collisions_y.activate()
+                self.game_info.points += points
+                self.game_info.coins += coins
+                self.sound_manager.play_sound(c.SOUND_COIN)
+            else:
+                self.rect.bottom = coin_box_collisions_y.rect.top
+
+            self.y_vel = 0
+
+        brick_box_collisions_y = pygame.sprite.spritecollideany(self, level.brick_box_group)
+        if brick_box_collisions_y:
+            if self.y_vel < 0:
+                self.rect.top = brick_box_collisions_y.rect.bottom
+                brick_box_collisions_y.activate()
+            else:
+                self.rect.bottom = brick_box_collisions_y.rect.top
             self.y_vel = 0
 
         if self.state == c.STATE_CROUCHING:

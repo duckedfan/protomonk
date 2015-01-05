@@ -1,5 +1,13 @@
 __author__ = 'jkamuda'
 
+# tile_set.png
+COIN_BOX_1 = (384, 0, 16, 16)
+COIN_BOX_2 = (400, 0, 16, 16)
+COIN_BOX_3 = (416, 0, 16, 16)
+COIN_BOX_EMPTY = (432, 0, 16, 16)
+
+BRICK = (32, 0, 16, 16)
+
 # characters.gif
 MARIO_SMALL_STANDING_RIGHT = (276, 43, 14, 17)
 

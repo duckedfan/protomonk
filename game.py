@@ -51,7 +51,7 @@ class Game():
         clock = pygame.time.Clock()
 
         active_sprite_list = pygame.sprite.Group()
-        player = Player(self.sound_manager)
+        player = Player(self.sound_manager, self.game_info)
         player.rect.x = 100
         player.rect.bottom = constants.GROUND_HEIGHT
 

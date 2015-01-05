@@ -29,14 +29,14 @@ class MarioGame(GameState):
 
         self.game_info.set_timer_in_seconds(300)
 
-        self.player = Player(self.sound_manager)
+        self.player = Player(self.sound_manager, game_info)
 
         self.active_sprite_list = pygame.sprite.Group()
         self.active_sprite_list.add(self.player)
 
         self.level = Level(self.player)
         
-        self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
+        #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
     def process_events(self, events):
         for event in events:
@@ -99,6 +99,7 @@ class MarioGame(GameState):
             if self.game_info.num_lives < 0:
                 self.set_next_state(GameState.STATE_GAME_OVER)
 
+        self.level.update(game_time)
         self.active_sprite_list.update(self.level, game_time)
 
     def draw(self, screen):

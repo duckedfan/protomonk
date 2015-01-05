@@ -3,6 +3,8 @@ __author__ = 'Admin'
 import constants
 from platform import Platform
 from utils import *
+from coin_box import CoinBox
+from brick_box import BrickBox
 
 
 class Level():
@@ -23,7 +25,21 @@ class Level():
         self.player = player
 
         self.init_platforms()
+        self.init_boxes()
 
+    def init_boxes(self):
+        # Coin boxes
+        self.coin_box_group = pygame.sprite.Group()
+        self.coin_box_group.add(CoinBox(640, 330))
+        self.coin_box_group.add(CoinBox(880, 330))
+        self.coin_box_group.add(CoinBox(960, 330))
+        self.coin_box_group.add(CoinBox(920, 200))
+
+        # Brick boxes
+        self.brick_box_group = pygame.sprite.Group()
+        self.brick_box_group.add(BrickBox(840, 330))
+        self.brick_box_group.add(BrickBox(920, 330))
+        self.brick_box_group.add(BrickBox(1000, 330))
 
     def init_platforms(self):
 
@@ -99,14 +115,34 @@ class Level():
         self.ground_group.add(brick_set5_group)
         self.ground_group.add(brick_set6_group)
 
+    def update(self, game_time):
+        for coin_box in self.coin_box_group:
+            coin_box.update(game_time)
+
+        for brick_box in self.brick_box_group:
+            brick_box.update(game_time)
+
     def draw(self, screen):
         screen.fill(constants.WHITE)
         screen.blit(self.background, (self.world_shift, 0))
 
+        # TODO yuck i dont like this...
         for block in self.ground_group:
             block.draw(screen)
+
+        for coin_box in self.coin_box_group:
+            coin_box.draw(screen)
+
+        for brick_box in self.brick_box_group:
+            brick_box.draw(screen)
 
     def shift_world(self, shift):
         self.world_shift += shift
         for rect in self.ground_group:
             rect.rect.x += shift
+
+        for coin_box in self.coin_box_group:
+            coin_box.rect.x += shift
+
+        for brick_box in self.brick_box_group:
+            brick_box.rect.x += shift

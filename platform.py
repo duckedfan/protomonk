@@ -4,6 +4,7 @@ import pygame
 import pygame.gfxdraw
 import constants
 
+
 class Platform(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height):

@@ -43,20 +43,10 @@ class Overhead():
         screen.blit(self.text_helper.get_text('o'), (130, 20))
 
         # Mario score
-        screen.blit(self.text_helper.get_text('0'), (50, 40))
-        screen.blit(self.text_helper.get_text('0'), (70, 40))
-        screen.blit(self.text_helper.get_text('0'), (90, 40))
-        screen.blit(self.text_helper.get_text('0'), (110, 40))
-        screen.blit(self.text_helper.get_text('0'), (130, 40))
-        screen.blit(self.text_helper.get_text('0'), (150, 40))
+        self.draw_point_score(screen)
 
         # Coins
-        screen.blit(self.coin_frames[self.coin_frame_idx], (268, 38))
-
-        # TODO fix the dimensions for the non-char characters!
-        screen.blit(self.text_helper.get_text('+'), (284, 44))
-        screen.blit(self.text_helper.get_text('0'), (300, 40))
-        screen.blit(self.text_helper.get_text('0'), (320, 40))
+        self.draw_coin_score(screen)
 
         # World
         screen.blit(self.text_helper.get_text('w'), (450, 20))
@@ -82,16 +72,35 @@ class Overhead():
     def draw_timer(self, screen):
         if self.game_info.timer is None:
             return
-        timer_time = self.game_info.get_timer_in_seconds()
 
-        singles = timer_time % 10
-        timer_time = int(timer_time / 10)
+        digits = self.get_digit_chars(self.game_info.get_timer_in_seconds(), 3)
 
-        tenths = timer_time % 10
-        timer_time = int(timer_time / 10)
+        screen.blit(self.text_helper.get_text(digits[2]), (630, 40))
+        screen.blit(self.text_helper.get_text(digits[1]), (650, 40))
+        screen.blit(self.text_helper.get_text(digits[0]), (670, 40))
 
-        hundredths = timer_time % 10
+    def draw_point_score(self, screen):
+        digits = self.get_digit_chars(self.game_info.points, 6)
 
-        screen.blit(self.text_helper.get_text(str(hundredths)), (630, 40))
-        screen.blit(self.text_helper.get_text(str(tenths)), (650, 40))
-        screen.blit(self.text_helper.get_text(str(singles)), (670, 40))
+        screen.blit(self.text_helper.get_text(digits[5]), (50, 40))
+        screen.blit(self.text_helper.get_text(digits[4]), (70, 40))
+        screen.blit(self.text_helper.get_text(digits[3]), (90, 40))
+        screen.blit(self.text_helper.get_text(digits[2]), (110, 40))
+        screen.blit(self.text_helper.get_text(digits[1]), (130, 40))
+        screen.blit(self.text_helper.get_text(digits[0]), (150, 40))
+
+    def draw_coin_score(self, screen):
+        digits = self.get_digit_chars(self.game_info.coins, 2)
+
+        screen.blit(self.coin_frames[self.coin_frame_idx], (268, 38))
+        screen.blit(self.text_helper.get_text('+'), (284, 44))
+        screen.blit(self.text_helper.get_text(digits[1]), (300, 40))
+        screen.blit(self.text_helper.get_text(digits[0]), (320, 40))
+
+    def get_digit_chars(self, value, num_digits):
+        digits = []
+        for i in range(0, num_digits):
+            digits.append(str(value % 10))
+            value = int(value / 10)
+
+        return digits
