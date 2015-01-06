@@ -1,5 +1,11 @@
 __author__ = 'jkamuda'
 
+# item_objects.png
+COIN_SPINNING_1 = (20, 113, 8, 14)
+COIN_SPINNING_2 = (38, 113, 4, 14)
+COIN_SPINNING_3 = (56, 113, 1, 14)
+COIN_SPINNING_4 = (6, 113, 4, 14)
+
 # tile_set.png
 COIN_BOX_1 = (384, 0, 16, 16)
 COIN_BOX_2 = (400, 0, 16, 16)

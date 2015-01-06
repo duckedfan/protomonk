@@ -4,6 +4,7 @@ import constants
 from platform import Platform
 from utils import *
 from coin_box import CoinBox
+from coin import Coin
 from brick_box import BrickBox
 
 
@@ -28,6 +29,10 @@ class Level():
         self.init_boxes()
 
     def init_boxes(self):
+        # TODO is temp
+        # Coins
+        self.coin_test = Coin(100, 100)
+
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
         self.coin_box_group.add(CoinBox(640, 330))
@@ -122,6 +127,8 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.update(game_time)
 
+        self.coin_test.update(game_time)
+
     def draw(self, screen):
         screen.fill(constants.WHITE)
         screen.blit(self.background, (self.world_shift, 0))
@@ -136,6 +143,8 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.draw(screen)
 
+        self.coin_test.draw(screen)
+
     def shift_world(self, shift):
         self.world_shift += shift
         for rect in self.ground_group:
@@ -146,3 +155,5 @@ class Level():
 
         for brick_box in self.brick_box_group:
             brick_box.rect.x += shift
+
+        self.coin_test.rect.x += shift

@@ -215,7 +215,7 @@ class Player(pygame.sprite.Sprite):
         self.sound_manager.play_music(c.MUSIC_DEATH)
         self.state = c.STATE_TRANSITION
         self.transition_state = c.TRANSITION_DEATH_SEQUENCE
-        self.y_vel += -15
+        self.y_vel = -15
 
     def calc_gravity(self):
         if self.y_vel == 0:
@@ -298,18 +298,18 @@ class Player(pygame.sprite.Sprite):
         self.transition_timer = 0
 
     def go_right(self):
-        self.x_vel = 30
+        self.x_vel = 5
         self.direction = c.DIR_RIGHT
         self.state = c.STATE_WALKING
 
     def go_left(self):
-        self.x_vel = -20
+        self.x_vel = -5
         self.direction = c.DIR_LEFT
         self.state = c.STATE_WALKING
 
     def jump(self):
         if self.y_vel == 0:
-            self.y_vel += -15
+            self.y_vel += -13
             self.sound_manager.play_sound(c.SOUND_SMALL_JUMP)
             self.state = c.STATE_JUMPING
 

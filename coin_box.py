@@ -1,7 +1,6 @@
 __author__ = 'jkamuda'
 
 import pygame
-import pygame.gfxdraw
 import coordinates as coords
 import constants as constants
 from spritesheet import SpriteSheet
