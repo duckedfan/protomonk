@@ -1,9 +1,10 @@
 __author__ = 'jkamuda'
 
 import pygame
-import coordinates as coords
+
+from src import coordinates as coords
 import constants as constants
-from spritesheet import SpriteSheet
+from src.spritesheet import SpriteSheet
 
 
 class CoinBox(pygame.sprite.Sprite):

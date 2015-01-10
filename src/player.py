@@ -1,9 +1,9 @@
 __author__ = 'jkamuda'
 
-import constants as c
-from spritesheet import SpriteSheet
-from utils import *
-import coordinates
+import src.constants as c
+from src.spritesheet import SpriteSheet
+from src.utils import *
+from src import coordinates
 
 
 class Player(pygame.sprite.Sprite):

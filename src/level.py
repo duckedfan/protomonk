@@ -1,11 +1,11 @@
 __author__ = 'Admin'
 
-import constants
-from platform import Platform
-from utils import *
-from coin_box import CoinBox
-from coin import Coin
-from brick_box import BrickBox
+from src import constants
+from src.platform import Platform
+from src.utils import *
+from src.coin_box import CoinBox
+from src.coin import Coin
+from src.brick_box import BrickBox
 
 
 class Level():

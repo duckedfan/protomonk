@@ -1,9 +1,9 @@
 __author__ = 'jkamuda'
 
 import pygame
-import constants
-import coordinates as coords
-from spritesheet import SpriteSheet
+
+from src import coordinates as coords, constants
+from src.spritesheet import SpriteSheet
 from texthelper import TextHelper
 from game_state import GameState
 

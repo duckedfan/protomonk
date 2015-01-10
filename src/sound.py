@@ -1,8 +1,8 @@
 __author__ = 'jkamuda'
 
-import constants
 import pygame
-import utils
+
+from src import constants, utils
 
 
 class SoundManager():

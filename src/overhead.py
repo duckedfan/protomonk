@@ -1,9 +1,8 @@
 __author__ = 'jkamuda'
 
-from texthelper import TextHelper
-from spritesheet import SpriteSheet
-import constants
-import coordinates as coords
+from src.texthelper import TextHelper
+from src.spritesheet import SpriteSheet
+from src import coordinates as coords, constants
 
 
 class Overhead():

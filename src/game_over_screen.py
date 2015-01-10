@@ -1,8 +1,8 @@
 __author__ = 'jkamuda'
 
-from game_state import GameState
-from texthelper import TextHelper
-import constants as c
+from src.game_state import GameState
+from src.texthelper import TextHelper
+from src import constants as c
 
 
 class GameOverScreen(GameState):

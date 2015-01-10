@@ -1,7 +1,7 @@
 __author__ = 'jkamuda'
 
-import constants
-from utils import *
+from src import constants
+from src.utils import *
 
 
 class SpriteSheet():

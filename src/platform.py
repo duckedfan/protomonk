@@ -2,7 +2,8 @@ __author__ = 'jkamuda'
 
 import pygame
 import pygame.gfxdraw
-import constants
+
+from src import constants
 
 
 class Platform(pygame.sprite.Sprite):

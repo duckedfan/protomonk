@@ -1,10 +1,11 @@
 __author__ = 'jkamuda'
 
-from game_state import GameState
 import pygame
+
+from game_state import GameState
 import constants
-from level import Level
-from player import Player
+from src.level import Level
+from src.player import Player
 
 
 class MarioGame(GameState):

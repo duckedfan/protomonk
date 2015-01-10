@@ -1,0 +1,5 @@
+# Ignore workspace items
+.idea/
+
+# Ignore pyc files
+*.pyc

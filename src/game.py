@@ -1,16 +1,18 @@
 __author__ = 'jkamuda'
 
 import os
+
 import pygame
+
 import constants
 from player import Player
-from sound import SoundManager
+from src.sound import SoundManager
 from menu import Menu
 from overhead import Overhead
 from game_state import GameState
-from load_screen import LoadScreen
+from src.load_screen import LoadScreen
 from game_info import GameInfo
-from mario_game import MarioGame
+from src.mario_game import MarioGame
 from game_over_screen import GameOverScreen
 
 

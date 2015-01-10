@@ -1,10 +1,10 @@
 __author__ = 'jkamuda'
 
-from game_state import GameState
-from texthelper import TextHelper
-from spritesheet import SpriteSheet
-import constants as c
-import coordinates as coords
+from src.game_state import GameState
+from src.texthelper import TextHelper
+from src.spritesheet import SpriteSheet
+import src.constants as c
+from src import coordinates as coords
 
 
 class LoadScreen(GameState):

@@ -1,9 +1,7 @@
 __author__ = 'jkamuda'
 
-from spritesheet import SpriteSheet
-import coordinates as coords
-import constants
-import utils
+from src.spritesheet import SpriteSheet
+from src import coordinates as coords, constants, utils
 
 
 class TextHelper():
