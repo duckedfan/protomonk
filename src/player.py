@@ -211,14 +211,14 @@ class Player(pygame.sprite.Sprite):
 
         if self.state == c.STATE_CROUCHING:
             self.image = self.get_player_frame(self.state, self.direction)
+            self.refresh_rect()
         elif self.y_vel != 0:
             self.image = self.get_player_frame(c.STATE_JUMPING, self.direction)
         elif self.x_vel == 0:
             self.image = self.get_player_frame(c.STATE_STANDING, self.direction)
+            self.refresh_rect()
         else:
             self.image = self.get_player_frame(c.STATE_WALKING, self.direction, (self.rect.x + self.world_shift) // 30)
-
-        self.refresh_rect()
 
     def start_death_sequence(self):
         self.sound_manager.play_music(c.MUSIC_DEATH)

@@ -14,13 +14,15 @@ class LoadScreen(GameState):
         self.game_info = game_info
         self.text_helper = TextHelper()
 
-        self.load_screen_time = 0
+        self.load_screen_time = -1
         # Mario frame
         sprite_sheet = SpriteSheet("data\characters.gif")
         self.mario_frame = sprite_sheet.get_image(coords.MARIO_SMALL_STANDING_RIGHT, c.IMG_MULTIPLIER)
 
     def update(self, game_time):
-        if (game_time - self.load_screen_time) > 2000:
+        if self.load_screen_time == -1:
+            self.load_screen_time = game_time
+        elif (game_time - self.load_screen_time) > 1000:
             self.switch = True
 
     def draw(self, screen):
