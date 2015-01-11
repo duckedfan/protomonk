@@ -4,19 +4,19 @@ import pygame
 import pygame.gfxdraw
 
 from src import coordinates as coords
-import constants as constants
+from .. import constants as c
 from src.spritesheet import SpriteSheet
 
 
 class BrickBox(pygame.sprite.Sprite):
-    brick_frame = None
-    box_time = -1
-    game_time = 0
-    in_transition = False
-    y_offset = 0
-
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
+
+        self.brick_frame = None
+        self.box_time = -1
+        self.game_time = 0
+        self.in_transition = False
+        self.y_offset = 0
 
         self.init_frames()
 
@@ -28,18 +28,14 @@ class BrickBox(pygame.sprite.Sprite):
     def init_frames(self):
         sprite_sheet = SpriteSheet("data\\tile_set.png")
 
-        self.brick_frame = sprite_sheet.get_image_v2(coords.BRICK, constants.IMG_MULTIPLIER)
-        self.brick_frame.set_colorkey(constants.WHITE)
+        self.brick_frame = sprite_sheet.get_image(coords.BRICK, c.IMG_MULTIPLIER, c.WHITE)
 
     def activate(self):
         self.in_transition = True
         self.y_offset = 10
-        return (0, 0)
+        return 0, 0
 
     def update(self, game_time):
-        if self.game_time == 0:
-            self.game_time = game_time
-
         time_delta = (game_time - self.game_time)
         self.box_time += time_delta
         self.game_time = game_time

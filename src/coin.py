@@ -32,10 +32,10 @@ class Coin(pygame.sprite.Sprite):
     def init_frames(self):
         sprite_sheet = SpriteSheet("data\item_objects.png")
 
-        self.coin_frames.append(sprite_sheet.get_image_v2(coords.COIN_SPINNING_1, constants.IMG_MULTIPLIER))
-        self.coin_frames.append(sprite_sheet.get_image_v2(coords.COIN_SPINNING_2, constants.IMG_MULTIPLIER))
-        self.coin_frames.append(sprite_sheet.get_image_v2(coords.COIN_SPINNING_3, constants.IMG_MULTIPLIER))
-        self.coin_frames.append(sprite_sheet.get_image_v2(coords.COIN_SPINNING_4, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_1, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_2, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_3, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_4, constants.IMG_MULTIPLIER))
 
         for frame in self.coin_frames:
             frame.set_colorkey(constants.BLACK)

@@ -9,19 +9,6 @@ from src.player import Player
 
 
 class MarioGame(GameState):
-
-    game_info = None
-    sound_manager = None
-
-    active_sprite_list = None
-    player = None
-
-    world_shift = 0
-
-    mario_game_time = -1
-
-    level = None
-
     def __init__(self, game_info, sound_manager):
         GameState.__init__(self, GameState.STATE_GAME, GameState.STATE_LOAD)
 
@@ -29,6 +16,9 @@ class MarioGame(GameState):
         self.sound_manager = sound_manager
 
         self.game_info.set_timer_in_seconds(300)
+
+        self.mario_game_time = -1
+        self.world_shift = 0
 
         self.player = Player(self.sound_manager, game_info)
 

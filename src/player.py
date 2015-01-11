@@ -3,31 +3,28 @@ __author__ = 'jkamuda'
 import src.constants as c
 from src.spritesheet import SpriteSheet
 from src.utils import *
-from src import coordinates
+from src import coordinates as coords
 
 
 class Player(pygame.sprite.Sprite):
-
-    state = c.STATE_STANDING
-    power = c.POWER_SMALL
-
-    transition_state = None
-    transition_timer = 0
-
-    player_small_frames = {}
-    player_frames = {}
-    transition_frames = {}
-    death_frame = None
-
-    direction = c.DIR_RIGHT
-
-    world_shift = 0
-
     def __init__(self, sound_manager, game_info):
         pygame.sprite.Sprite.__init__(self)
 
         self.sound_manager = sound_manager
         self.game_info = game_info
+
+        self.state = c.STATE_STANDING
+        self.power = c.POWER_SMALL
+        self.direction = c.DIR_RIGHT
+        self.world_shift = 0
+
+        self.transition_state = None
+        self.transition_timer = 0
+
+        self.player_small_frames = {}
+        self.player_frames = {}
+        self.transition_frames = {}
+        self.death_frame = None
 
         self.sprite_sheet = SpriteSheet("data\characters.gif")
 
@@ -47,35 +44,39 @@ class Player(pygame.sprite.Sprite):
         self.player_small_frames[c.STATE_STANDING] = dict((key, []) for key in dir_keys)
         self.player_small_frames[c.STATE_WALKING] = dict((key, []) for key in dir_keys)
         self.player_small_frames[c.STATE_JUMPING] = dict((key, []) for key in dir_keys)
+        self.transition_frames = dict((key, []) for key in dir_keys)
 
         # Standing frames
-        self.player_small_frames[c.STATE_STANDING][c.DIR_LEFT].append(self.sprite_sheet.get_image(223, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
-        self.player_small_frames[c.STATE_STANDING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(276, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+        small_standing_left = self.sprite_sheet.get_image(coords.MARIO_SMALL_STANDING_LEFT, c.IMG_MULTIPLIER)
+        small_standing_right = self.sprite_sheet.get_image(coords.MARIO_SMALL_STANDING_RIGHT, c.IMG_MULTIPLIER)
+        self.player_small_frames[c.STATE_STANDING][c.DIR_LEFT].append(small_standing_left)
+        self.player_small_frames[c.STATE_STANDING][c.DIR_RIGHT].append(small_standing_right)
 
         # Jumping frames
-        self.player_small_frames[c.STATE_JUMPING][c.DIR_LEFT].append(self.sprite_sheet.get_image(142, 43, c.PLAYER_SMALL_JUMP_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
-        self.player_small_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(355, 43, c.PLAYER_SMALL_JUMP_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER))
+        small_jumping_left = self.sprite_sheet.get_image(coords.MARIO_SMALL_JUMPING_LEFT, c.IMG_MULTIPLIER)
+        small_jumping_right = self.sprite_sheet.get_image(coords.MARIO_SMALL_JUMPING_RIGHT, c.IMG_MULTIPLIER)
+        self.player_small_frames[c.STATE_JUMPING][c.DIR_LEFT].append(small_jumping_left)
+        self.player_small_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(small_jumping_right)
 
         # Transition frames
-        self.transition_frames = dict((key, []) for key in dir_keys)
-        self.transition_frames[c.DIR_LEFT] = self.sprite_sheet.get_image(239, 36, c.PLAYER_MID_W, c.PLAYER_MID_H, c.IMG_MULTIPLIER)
-        self.transition_frames[c.DIR_RIGHT] = self.sprite_sheet.get_image(258, 36, c.PLAYER_MID_W, c.PLAYER_MID_H, c.IMG_MULTIPLIER)
+        self.transition_frames[c.DIR_LEFT] = self.sprite_sheet.get_image(coords.MARIO_TRANSITION_MID_LEFT, c.IMG_MULTIPLIER)
+        self.transition_frames[c.DIR_RIGHT] = self.sprite_sheet.get_image(coords.MARIO_TRANSITION_MID_RIGHT, c.IMG_MULTIPLIER)
 
         # Death frame
-        self.death_frame = self.sprite_sheet.get_image_v2(coordinates.MARIO_DEAD, c.IMG_MULTIPLIER)
+        self.death_frame = self.sprite_sheet.get_image(coords.MARIO_DEAD, c.IMG_MULTIPLIER)
 
         # Walking frames
-        right_1 = self.sprite_sheet.get_image(291, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
-        right_2 = self.sprite_sheet.get_image(305, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
-        right_3 = self.sprite_sheet.get_image(321, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        right_1 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_RIGHT_1, c.IMG_MULTIPLIER)
+        right_2 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_RIGHT_2, c.IMG_MULTIPLIER)
+        right_3 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_RIGHT_3, c.IMG_MULTIPLIER)
 
         self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_1)
         self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_2)
         self.player_small_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_3)
 
-        left_1 = self.sprite_sheet.get_image(208, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
-        left_2 = self.sprite_sheet.get_image(194, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
-        left_3 = self.sprite_sheet.get_image(178, 43, c.PLAYER_SMALL_W, c.PLAYER_SMALL_H, c.IMG_MULTIPLIER)
+        left_1 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_LEFT_1, c.IMG_MULTIPLIER)
+        left_2 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_LEFT_2, c.IMG_MULTIPLIER)
+        left_3 = self.sprite_sheet.get_image(coords.MARIO_SMALL_WALKING_LEFT_3, c.IMG_MULTIPLIER)
 
         self.player_small_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_1)
         self.player_small_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_2)
@@ -89,29 +90,35 @@ class Player(pygame.sprite.Sprite):
         self.player_frames[c.STATE_CROUCHING] = dict((key, []) for key in dir_keys)
 
         # Standing frames
-        self.player_frames[c.STATE_STANDING][c.DIR_LEFT].append(self.sprite_sheet.get_image(238, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
-        self.player_frames[c.STATE_STANDING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(257, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
+        big_standing_left = self.sprite_sheet.get_image(coords.MARIO_BIG_STANDING_LEFT, c.IMG_MULTIPLIER)
+        big_standing_right = self.sprite_sheet.get_image(coords.MARIO_BIG_STANDING_RIGHT, c.IMG_MULTIPLIER)
+        self.player_frames[c.STATE_STANDING][c.DIR_LEFT].append(big_standing_left)
+        self.player_frames[c.STATE_STANDING][c.DIR_RIGHT].append(big_standing_right)
 
         # Jumping frames
-        self.player_frames[c.STATE_JUMPING][c.DIR_LEFT].append(self.sprite_sheet.get_image(127, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
-        self.player_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(368, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
+        big_jumping_left = self.sprite_sheet.get_image(coords.MARIO_BIG_JUMPING_LEFT, c.IMG_MULTIPLIER)
+        big_jumping_right = self.sprite_sheet.get_image(coords.MARIO_BIG_JUMPING_RIGHT, c.IMG_MULTIPLIER)
+        self.player_frames[c.STATE_JUMPING][c.DIR_LEFT].append(big_jumping_left)
+        self.player_frames[c.STATE_JUMPING][c.DIR_RIGHT].append(big_jumping_right)
 
         # Crouching frames
-        self.player_frames[c.STATE_CROUCHING][c.DIR_LEFT].append(self.sprite_sheet.get_image(221, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
-        self.player_frames[c.STATE_CROUCHING][c.DIR_RIGHT].append(self.sprite_sheet.get_image(276, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER))
+        big_crouching_left = self.sprite_sheet.get_image(coords.MARIO_BIG_CROUCHING_LEFT, c.IMG_MULTIPLIER)
+        big_crouching_right = self.sprite_sheet.get_image(coords.MARIO_BIG_CROUCHING_RIGHT, c.IMG_MULTIPLIER)
+        self.player_frames[c.STATE_CROUCHING][c.DIR_LEFT].append(big_crouching_left)
+        self.player_frames[c.STATE_CROUCHING][c.DIR_RIGHT].append(big_crouching_right)
 
         # Walking frames
-        right_1 = self.sprite_sheet.get_image(295, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
-        right_2 = self.sprite_sheet.get_image(313, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
-        right_3 = self.sprite_sheet.get_image(330, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
+        right_1 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_RIGHT_1, c.IMG_MULTIPLIER)
+        right_2 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_RIGHT_2, c.IMG_MULTIPLIER)
+        right_3 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_RIGHT_3, c.IMG_MULTIPLIER)
 
         self.player_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_1)
         self.player_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_2)
         self.player_frames[c.STATE_WALKING][c.DIR_RIGHT].append(right_3)
 
-        left_1 = self.sprite_sheet.get_image(200, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
-        left_2 = self.sprite_sheet.get_image(165, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
-        left_3 = self.sprite_sheet.get_image(182, 1, c.PLAYER_ADULT_W, c.PLAYER_ADULT_H, c.IMG_MULTIPLIER)
+        left_1 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_LEFT_1, c.IMG_MULTIPLIER)
+        left_2 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_LEFT_2, c.IMG_MULTIPLIER)
+        left_3 = self.sprite_sheet.get_image(coords.MARIO_BIG_WALKING_LEFT_3, c.IMG_MULTIPLIER)
 
         self.player_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_1)
         self.player_frames[c.STATE_WALKING][c.DIR_LEFT].append(left_2)
@@ -210,6 +217,8 @@ class Player(pygame.sprite.Sprite):
             self.image = self.get_player_frame(c.STATE_STANDING, self.direction)
         else:
             self.image = self.get_player_frame(c.STATE_WALKING, self.direction, (self.rect.x + self.world_shift) // 30)
+
+        self.refresh_rect()
 
     def start_death_sequence(self):
         self.sound_manager.play_music(c.MUSIC_DEATH)

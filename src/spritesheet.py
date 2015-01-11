@@ -10,18 +10,10 @@ class SpriteSheet():
     def __init__(self, filename):
         self.sprite_sheet = pygame.image.load(filename)
 
-    def get_image(self, x, y, width, height, scale=1):
-        image = pygame.Surface([width, height]).convert()
-        image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
-        image.set_colorkey(constants.BLACK)
-        if scale != 1:
-            image = scale_image(image, scale)
-        return image
-
-    def get_image_v2(self, rect, scale=1):
+    def get_image(self, rect, scale=1, colorkey=constants.BLACK):
         image = pygame.Surface([rect[2], rect[3]])
         image.blit(self.sprite_sheet, (0, 0), rect)
-        image.set_colorkey(constants.BLACK)
+        image.set_colorkey(colorkey)
         if scale != 1:
             image = scale_image(image, scale)
         return image

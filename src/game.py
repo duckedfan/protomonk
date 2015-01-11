@@ -17,16 +17,13 @@ from game_over_screen import GameOverScreen
 
 
 class Game():
-    screen = None
-    caption = 'NES Mario'
-    sound_manager = None
-    game_info = None
-
     def __init__(self):
         # Center window on screen
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
         pygame.init()
+
+        self.caption = 'NES Mario'
 
         size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
         self.screen = pygame.display.set_mode(size)

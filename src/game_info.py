@@ -2,14 +2,6 @@ __author__ = 'jkamuda'
 
 
 class GameInfo():
-    points = 0
-    coins = 0
-    world = 0
-    level = 0
-    num_lives = 0
-    game_time = None
-    timer = None
-
     def __init__(self):
         self.reset()
 

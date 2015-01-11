@@ -8,25 +8,19 @@ from src import coordinates as coords
 
 
 class LoadScreen(GameState):
-    mario_frame = None
-    load_screen_time = -1
-    text_helper = None
-    game_info = None
-
     def __init__(self, game_info):
         GameState.__init__(self, GameState.STATE_LOAD, GameState.STATE_GAME)
 
         self.game_info = game_info
         self.text_helper = TextHelper()
 
+        self.load_screen_time = 0
         # Mario frame
         sprite_sheet = SpriteSheet("data\characters.gif")
-        self.mario_frame = sprite_sheet.get_image_v2(coords.MARIO_SMALL_STANDING_RIGHT, c.IMG_MULTIPLIER)
+        self.mario_frame = sprite_sheet.get_image(coords.MARIO_SMALL_STANDING_RIGHT, c.IMG_MULTIPLIER)
 
     def update(self, game_time):
-        if self.load_screen_time == -1:
-            self.load_screen_time = game_time
-        elif (game_time - self.load_screen_time) > 2000:
+        if (game_time - self.load_screen_time) > 2000:
             self.switch = True
 
     def draw(self, screen):

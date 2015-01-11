@@ -6,24 +6,20 @@ from src import coordinates as coords, constants
 
 
 class Overhead():
-
-    coin_frames = []
-    coin_frame_idx = 0
-    coin_time = 0
-
-    game_info = None
-
     def __init__(self, game_info):
         self.game_info = game_info
 
         self.text_helper = TextHelper()
+        self.coin_frame_idx = 0
+        self.coin_time = 0
 
         # tile_set.png
         item_objects_ss = SpriteSheet("data/item_objects.png")
 
-        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_1, constants.IMG_MULTIPLIER))
-        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_2, constants.IMG_MULTIPLIER))
-        self.coin_frames.append(item_objects_ss.get_image_v2(coords.TITLE_COIN_3, constants.IMG_MULTIPLIER))
+        self.coin_frames = []
+        self.coin_frames.append(item_objects_ss.get_image(coords.TITLE_COIN_1, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(item_objects_ss.get_image(coords.TITLE_COIN_2, constants.IMG_MULTIPLIER))
+        self.coin_frames.append(item_objects_ss.get_image(coords.TITLE_COIN_3, constants.IMG_MULTIPLIER))
 
     def update(self, game_time):
         coin_time_delta = game_time - self.coin_time

@@ -6,7 +6,6 @@ from src import constants, utils
 
 
 class SoundManager():
-
     def __init__(self):
         self.sounds = utils.load_music_resources(constants.SOUND_DIR, constants.SOUND_EXTENSIONS)
         self.music = utils.load_music_resources(constants.MUSIC_DIR, constants.SOUND_EXTENSIONS)

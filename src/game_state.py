@@ -8,14 +8,10 @@ class GameState():
     STATE_GAME = 'game'
     STATE_GAME_OVER = 'gameover'
 
-    current = None
-    next = None
-
-    switch = False
-
     def __init__(self, state, next_state):
         self.current = state
         self.next = next_state
+        self.switch = False
 
     def set_next_state(self, next_state):
         self.next = next_state
