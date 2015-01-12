@@ -26,9 +26,7 @@ class CoinBox(pygame.sprite.Sprite):
         self.transition_time = 0
         self.y_offset = 0
 
-        self.coin_animating = False
-        self.coin = None
-
+        self.coin_score_group = pygame.sprite.Group()
         self.score_group = pygame.sprite.Group()
 
         self.init_frames()
@@ -49,11 +47,9 @@ class CoinBox(pygame.sprite.Sprite):
 
     def shift_world(self, shift):
         self.rect.x += shift
-        if self.coin_animating:
-            self.coin.shift_world(shift)
 
-        for score in self.score_group:
-            score.shift_world(shift)
+        for item in self.coin_score_group:
+            item.shift_world(shift)
 
     def activate(self):
         if self.empty is False:
@@ -97,25 +93,20 @@ class CoinBox(pygame.sprite.Sprite):
         else:
             self.transition_time = 0
 
-        if self.coin_animating:
-            self.coin.update(game_time)
-            if not self.coin.is_bouncing:
-                self.coin_animating = False
-                score = Score(self.rect.x + 5, self.rect.y - 25, 200)
-                self.score_group.add(score)
-
-        for group in self.score_group:
-            group.update(game_time)
+        for item in self.coin_score_group:
+            item.update(game_time)
+            if isinstance(item, Coin):
+                if not item.is_bouncing:
+                    item.kill()
+                    score = Score(self.rect.x + 5, self.rect.y - 25, c.SCORE_COIN)
+                    self.coin_score_group.add(score)
 
     def start_coin_animation(self):
-        self.coin_animating = True
-        self.coin = Coin(self.rect.x + (self.rect.width / 2), self.rect.y - self.y_offset - 40)
-        self.coin.start_coin_bounce()
+        coin = Coin(self.rect.x + (self.rect.width / 2), self.rect.y - self.y_offset - 40)
+        coin.start_coin_bounce()
+        self.coin_score_group.add(coin)
 
     def draw(self, screen):
         screen.blit(self.display_frame, (self.rect.x, self.rect.y - self.y_offset))
-        if self.coin_animating:
-            self.coin.draw(screen)
-
-        for score in self.score_group:
-            score.draw(screen)
+        for item in self.coin_score_group:
+            item.draw(screen)

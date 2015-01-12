@@ -61,7 +61,7 @@ class Coin(pygame.sprite.Sprite):
             self.calc_gravity()
             self.rect.y += self.y_velocity
             if self.rect.y > self.y:
-                self.kill()
+                # self.kill()
                 self.is_bouncing = False
 
         time_delta = game_time - self.coin_time
