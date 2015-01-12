@@ -52,6 +52,9 @@ class CoinBox(pygame.sprite.Sprite):
         if self.coin_animating:
             self.coin.shift_world(shift)
 
+        for score in self.score_group:
+            score.shift_world(shift)
+
     def activate(self):
         if self.empty is False:
             self.in_transition = True
@@ -114,5 +117,5 @@ class CoinBox(pygame.sprite.Sprite):
         if self.coin_animating:
             self.coin.draw(screen)
 
-        for group in self.score_group:
-            group.draw(screen)
+        for score in self.score_group:
+            score.draw(screen)
