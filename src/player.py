@@ -160,6 +160,8 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.x += self.x_vel
 
+        # TODO group all these collision groups together
+
         ground_collisions_x = pygame.sprite.spritecollide(self, level.ground_group, False)
         for platform in ground_collisions_x:
             if self.x_vel > 0:
@@ -194,7 +196,6 @@ class Player(pygame.sprite.Sprite):
                 points, coins = coin_box_collisions_y.activate()
                 self.game_info.points += points
                 self.game_info.coins += coins
-                self.sound_manager.play_sound(c.SOUND_COIN)
             else:
                 self.rect.bottom = coin_box_collisions_y.rect.top
 
@@ -205,6 +206,7 @@ class Player(pygame.sprite.Sprite):
             if self.y_vel < 0:
                 self.rect.top = brick_box_collisions_y.rect.bottom
                 brick_box_collisions_y.activate()
+                brick_box_collisions_y.update(current_time)
             else:
                 self.rect.bottom = brick_box_collisions_y.rect.top
             self.y_vel = 0

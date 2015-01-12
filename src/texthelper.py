@@ -1,17 +1,19 @@
 __author__ = 'jkamuda'
 
 from src.spritesheet import SpriteSheet
-from src import coordinates as coords, constants, utils
+from src import coordinates as coords, utils
+from src import constants as c
 
 
 class TextHelper():
     def __init__(self):
         self.color_key = (92, 148, 252)
+
         self.text_dict = {}
 
-        self.init_image_dictionaries()
+        self.init_image_dictionary()
 
-    def init_image_dictionaries(self):
+    def init_image_dictionary(self):
         ss = SpriteSheet("data/text_images.png")
 
         self.text_dict['0'] = ss.get_image(coords.NUM_0)
@@ -58,10 +60,9 @@ class TextHelper():
 
         for key in self.text_dict:
             image = self.text_dict[key]
-            image = utils.scale_image(image, constants.IMG_MULTIPLIER)
+            image = utils.scale_image(image, c.IMG_MULTIPLIER)
             image.set_colorkey(self.color_key)
             self.text_dict[key] = image
 
     def get_text(self, key):
         return self.text_dict[key.lower()]
-

@@ -9,9 +9,10 @@ from src.spritesheet import SpriteSheet
 
 
 class BrickBox(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, sound_manager, x, y):
         pygame.sprite.Sprite.__init__(self)
 
+        self.sound_manager = sound_manager
         self.brick_frame = None
         self.box_time = -1
         self.game_time = 0
@@ -33,6 +34,7 @@ class BrickBox(pygame.sprite.Sprite):
     def activate(self):
         self.in_transition = True
         self.y_offset = 10
+        self.sound_manager.play_sound(c.SOUND_BUMP)
         return 0, 0
 
     def update(self, game_time):

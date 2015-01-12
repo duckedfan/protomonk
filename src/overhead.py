@@ -3,6 +3,7 @@ __author__ = 'jkamuda'
 from src.texthelper import TextHelper
 from src.spritesheet import SpriteSheet
 from src import coordinates as coords, constants
+from src import utils
 
 
 class Overhead():
@@ -68,14 +69,14 @@ class Overhead():
         if self.game_info.timer is None:
             return
 
-        digits = self.get_digit_chars(self.game_info.get_timer_in_seconds(), 3)
+        digits = utils.get_digit_chars(self.game_info.get_timer_in_seconds(), 3)
 
         screen.blit(self.text_helper.get_text(digits[2]), (630, 40))
         screen.blit(self.text_helper.get_text(digits[1]), (650, 40))
         screen.blit(self.text_helper.get_text(digits[0]), (670, 40))
 
     def draw_point_score(self, screen):
-        digits = self.get_digit_chars(self.game_info.points, 6)
+        digits = utils.get_digit_chars(self.game_info.points, 6)
 
         screen.blit(self.text_helper.get_text(digits[5]), (50, 40))
         screen.blit(self.text_helper.get_text(digits[4]), (70, 40))
@@ -85,17 +86,9 @@ class Overhead():
         screen.blit(self.text_helper.get_text(digits[0]), (150, 40))
 
     def draw_coin_score(self, screen):
-        digits = self.get_digit_chars(self.game_info.coins, 2)
+        digits = utils.get_digit_chars(self.game_info.coins, 2)
 
         screen.blit(self.coin_frames[self.coin_frame_idx], (268, 38))
         screen.blit(self.text_helper.get_text('+'), (284, 44))
         screen.blit(self.text_helper.get_text(digits[1]), (300, 40))
         screen.blit(self.text_helper.get_text(digits[0]), (320, 40))
-
-    def get_digit_chars(self, value, num_digits):
-        digits = []
-        for i in range(0, num_digits):
-            digits.append(str(value % 10))
-            value = int(value / 10)
-
-        return digits

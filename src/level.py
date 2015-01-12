@@ -4,51 +4,46 @@ from src import constants as c
 from src.platform import Platform
 from src.utils import *
 from src.boxes.coin_box import CoinBox
-from src.coin import Coin
 from src.boxes.brick_box import BrickBox
 
 
 class Level():
+    def __init__(self, player, sound_manager):
+        self.player = player
+        self.sound_manager = sound_manager
+        self.background = None
+        self.world_shift = 0
 
-    world_shift = 0
-    background = None
-    player = None
+        self.ground_group = None
+        self.coin_box_group = None
+        self.brick_box_group = None
 
-    ground_group = None
+        self.init_background()
+        self.init_platforms()
+        self.init_boxes()
 
-    def __init__(self, player):
-        # Init background
+    def init_background(self):
         self.background = pygame.image.load("data/levels/level_1.png").convert()
         self.background = scale_image(self.background, c.IMG_MULTIPLIER)
         self.background.set_colorkey(c.WHITE)
 
-        self.player = player
-
-        self.init_platforms()
-        self.init_boxes()
-
     def init_boxes(self):
-        # TODO is temp
-        # Coins
-        self.coin_test = Coin(100, 100)
-
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
-        self.coin_box_group.add(CoinBox(640, 330))
-        self.coin_box_group.add(CoinBox(880, 330))
-        self.coin_box_group.add(CoinBox(960, 330))
-        self.coin_box_group.add(CoinBox(920, 200))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 640, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 880, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 960, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 920, 200))
 
         # Brick boxes
         self.brick_box_group = pygame.sprite.Group()
-        self.brick_box_group.add(BrickBox(840, 330))
-        self.brick_box_group.add(BrickBox(920, 330))
-        self.brick_box_group.add(BrickBox(1000, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 840, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 920, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 1000, 330))
 
     def init_platforms(self):
-
         # Ground
-        # TODO absract away the level width
+        # TODO abstract away the level width
         ground_rect1 = Platform(0, c.GROUND_HEIGHT, 2760, 62)
         ground_rect2 = Platform(2840, c.GROUND_HEIGHT, 600, 62)
         ground_rect3 = Platform(3560, c.GROUND_HEIGHT, 2560, 62)
@@ -126,8 +121,6 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.update(game_time)
 
-        self.coin_test.update(game_time)
-
     def draw(self, screen):
         screen.fill(c.WHITE)
         screen.blit(self.background, (self.world_shift, 0))
@@ -142,17 +135,13 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.draw(screen)
 
-        self.coin_test.draw(screen)
-
     def shift_world(self, shift):
         self.world_shift += shift
         for rect in self.ground_group:
             rect.rect.x += shift
 
         for coin_box in self.coin_box_group:
-            coin_box.rect.x += shift
+            coin_box.shift_world(shift)
 
         for brick_box in self.brick_box_group:
             brick_box.rect.x += shift
-
-        self.coin_test.rect.x += shift

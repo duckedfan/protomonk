@@ -25,7 +25,7 @@ class MarioGame(GameState):
         self.active_sprite_list = pygame.sprite.Group()
         self.active_sprite_list.add(self.player)
 
-        self.level = Level(self.player)
+        self.level = Level(self.player, self.sound_manager)
         
         #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
@@ -90,8 +90,8 @@ class MarioGame(GameState):
             if self.game_info.num_lives < 0:
                 self.set_next_state(GameState.STATE_GAME_OVER)
 
-        self.level.update(game_time)
         self.active_sprite_list.update(self.level, game_time)
+        self.level.update(game_time)
 
     def draw(self, screen):
         self.level.draw(screen)
