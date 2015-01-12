@@ -15,7 +15,6 @@ class CoinBox(pygame.sprite.Sprite):
 
         self.sound_manager = sound_manager
         self.num_coins = num_coins
-        self.empty = False
         self.empty_frame = None
         self.display_frame = None
         self.coin_box_frames = []
@@ -52,11 +51,12 @@ class CoinBox(pygame.sprite.Sprite):
             item.shift_world(shift)
 
     def activate(self):
-        if self.empty is False:
+        if self.num_coins > 0:
             self.in_transition = True
             self.y_offset = 10
             self.sound_manager.play_sound(c.SOUND_COIN)
             self.start_coin_animation()
+            self.num_coins -= 1
             return 200, 1
         else:
             self.sound_manager.play_sound(c.SOUND_BUMP)
@@ -68,7 +68,7 @@ class CoinBox(pygame.sprite.Sprite):
         self.transition_time = self.coin_box_time
         self.game_time = game_time
 
-        if self.empty:
+        if self.num_coins == 0:
             self.display_frame = self.empty_frame
         else:
             if 0 < self.coin_box_time <= 400:
@@ -89,7 +89,6 @@ class CoinBox(pygame.sprite.Sprite):
                 self.transition_time = 0
             if self.y_offset == 0:
                 self.in_transition = False
-                self.empty = True
         else:
             self.transition_time = 0
 
