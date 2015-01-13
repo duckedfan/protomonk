@@ -32,6 +32,8 @@ TITLE_COIN_3 = (17, 160, 5, 8)
 
 TITLE_SELECTOR = (24, 160, 8, 8)
 
+MUSHROOM_POWERUP = (0, 16, 16, 16)
+
 # tile_set.png
 COIN_BOX_1 = (384, 0, 16, 16)
 COIN_BOX_2 = (400, 0, 16, 16)

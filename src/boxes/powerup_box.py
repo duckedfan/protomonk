@@ -3,18 +3,18 @@ __author__ = 'jkamuda'
 import pygame
 
 from src import coordinates as coords
-from src import constants as c
+from .. import constants as c
 from src.spritesheet import SpriteSheet
-from src.coin import Coin
-from src.score import Score
+from src.powerups.mushroom import Mushroom
 
 
-class CoinBox(pygame.sprite.Sprite):
-    def __init__(self, sound_manager, x, y, num_coins=1):
+class PowerUpBox(pygame.sprite.Sprite):
+    def __init__(self, sound_manager, group, x, y, powerup=c.POWERUP_MUSHROOM):
         pygame.sprite.Sprite.__init__(self)
 
         self.sound_manager = sound_manager
-        self.num_coins = num_coins
+        self.group = group
+        self.powerup = powerup
         self.empty_frame = None
         self.display_frame = None
         self.coin_box_frames = []
@@ -24,8 +24,9 @@ class CoinBox(pygame.sprite.Sprite):
         self.in_transition = False
         self.transition_time = 0
         self.y_offset = 0
+        self.empty = False
 
-        self.coin_score_group = pygame.sprite.Group()
+        self.powerup_group = pygame.sprite.Group()
 
         self.init_frames()
 
@@ -46,17 +47,13 @@ class CoinBox(pygame.sprite.Sprite):
     def shift_world(self, shift):
         self.rect.x += shift
 
-        for item in self.coin_score_group:
-            item.shift_world(shift)
-
     def activate(self):
-        if self.num_coins > 0:
+        if not self.empty:
             self.in_transition = True
             self.y_offset = 10
-            self.sound_manager.play_sound(c.SOUND_COIN)
-            self.start_coin_animation()
-            self.num_coins -= 1
-            return 200, 1
+            self.sound_manager.play_sound(c.SOUND_POWERUP_APPEARS)
+            self.spawn_powerup()
+            return 0, 0
         else:
             self.sound_manager.play_sound(c.SOUND_BUMP)
             return 0, 0
@@ -67,7 +64,7 @@ class CoinBox(pygame.sprite.Sprite):
         self.transition_time = self.coin_box_time
         self.game_time = game_time
 
-        if self.num_coins == 0:
+        if self.empty:
             self.display_frame = self.empty_frame
         else:
             if 0 < self.coin_box_time <= 400:
@@ -91,20 +88,10 @@ class CoinBox(pygame.sprite.Sprite):
         else:
             self.transition_time = 0
 
-        for item in self.coin_score_group:
-            item.update(game_time)
-            if isinstance(item, Coin):
-                if not item.is_bouncing:
-                    item.kill()
-                    score = Score(self.rect.x + 5, self.rect.y - 25, c.SCORE_COIN)
-                    self.coin_score_group.add(score)
-
-    def start_coin_animation(self):
-        coin = Coin(self.rect.x + (self.rect.width / 2), self.rect.y - self.y_offset - 40)
-        coin.start_coin_bounce()
-        self.coin_score_group.add(coin)
+    def spawn_powerup(self):
+        powerup = Mushroom(self.rect.x, self.rect.top)
+        self.group.add(powerup)
+        self.empty = True
 
     def draw(self, screen):
         screen.blit(self.display_frame, (self.rect.x, self.rect.y - self.y_offset))
-        for item in self.coin_score_group:
-            item.draw(screen)

@@ -92,3 +92,8 @@ PLAYER_SMALL_H = 17
 
 # Scoring
 SCORE_COIN = 200
+
+# Powerups
+POWERUP_MUSHROOM = 'powerup_mushroom'
+POWERUP_FLOWER = 'powerup_flower'
+POWERUP_STAR = 'powerup_star'

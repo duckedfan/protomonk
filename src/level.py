@@ -5,7 +5,8 @@ from src.platform import Platform
 from src.utils import *
 from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
-
+from src.boxes.powerup_box import PowerUpBox
+from src.powerups.mushroom import Mushroom
 
 class Level():
     def __init__(self, player, sound_manager):
@@ -17,6 +18,8 @@ class Level():
         self.ground_group = None
         self.coin_box_group = None
         self.brick_box_group = None
+        self.powerup_group = pygame.sprite.Group()
+        self.platform_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
@@ -31,7 +34,7 @@ class Level():
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
         self.coin_box_group.add(CoinBox(self.sound_manager, 640, 330))
-        self.coin_box_group.add(CoinBox(self.sound_manager, 880, 330))
+        self.coin_box_group.add(PowerUpBox(self.sound_manager, self.powerup_group, 880, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 960, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 920, 200))
 
@@ -40,6 +43,9 @@ class Level():
         self.brick_box_group.add(BrickBox(self.sound_manager, 840, 330))
         self.brick_box_group.add(BrickBox(self.sound_manager, 920, 330))
         self.brick_box_group.add(BrickBox(self.sound_manager, 1000, 330))
+
+        self.platform_group.add(self.coin_box_group)
+        self.platform_group.add(self.brick_box_group)
 
     def init_platforms(self):
         # Ground
@@ -114,12 +120,17 @@ class Level():
         self.ground_group.add(brick_set5_group)
         self.ground_group.add(brick_set6_group)
 
+        self.platform_group.add(self.ground_group)
+
     def update(self, game_time):
         for coin_box in self.coin_box_group:
             coin_box.update(game_time)
 
         for brick_box in self.brick_box_group:
             brick_box.update(game_time)
+
+        for powerup in self.powerup_group:
+            powerup.update(game_time, self.platform_group)
 
     def draw(self, screen):
         screen.fill(c.WHITE)
@@ -129,11 +140,15 @@ class Level():
         for block in self.ground_group:
             block.draw(screen)
 
+        for powerup in self.powerup_group:
+            powerup.draw(screen)
+
         for coin_box in self.coin_box_group:
             coin_box.draw(screen)
 
         for brick_box in self.brick_box_group:
             brick_box.draw(screen)
+
 
     def shift_world(self, shift):
         self.world_shift += shift
@@ -145,3 +160,6 @@ class Level():
 
         for brick_box in self.brick_box_group:
             brick_box.rect.x += shift
+
+        for powerup in self.powerup_group:
+            powerup.shift_world(shift)
