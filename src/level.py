@@ -130,7 +130,7 @@ class Level():
             brick_box.update(game_time)
 
         for powerup in self.powerup_group:
-            powerup.update(game_time, self.platform_group)
+            powerup.update(game_time, self.platform_group, self.player)
 
     def draw(self, screen):
         screen.fill(c.WHITE)

@@ -32,7 +32,7 @@ class Mushroom(pygame.sprite.Sprite):
     def shift_world(self, shift):
         self.rect.x += shift
 
-    def update(self, game_time, platform_group):
+    def update(self, game_time, platform_group, player):
         if self.emerging:
             self.rect.y -= .5
             if self.rect.y < self.y_cap:
@@ -46,10 +46,10 @@ class Mushroom(pygame.sprite.Sprite):
 
             self.rect.x += self.x_vel
             self.rect.y += self.y_vel
-            self.check_collisions(platform_group)
+            self.check_platform_collisions(platform_group)
+            self.check_player_collisions(player)
 
-    def check_collisions(self, platform_group):
-        print "collision checkk"
+    def check_platform_collisions(self, platform_group):
         collisions_y = pygame.sprite.spritecollideany(self, platform_group)
         if collisions_y:
             if self.y_vel < 0:
@@ -66,6 +66,12 @@ class Mushroom(pygame.sprite.Sprite):
             elif self.x_vel < 0:
                 self.rect.left = collision.rect.right
                 self.direction = c.DIR_RIGHT
+
+    def check_player_collisions(self, player):
+        player_collision = pygame.sprite.collide_rect(self, player)
+        if player_collision:
+            player.powerup(c.POWERUP_MUSHROOM)
+            self.kill()
 
     def draw(self, screen):
         screen.blit(self.mushroom_frame, (self.rect.x, self.rect.y))

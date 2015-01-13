@@ -294,6 +294,20 @@ class Player(pygame.sprite.Sprite):
 
         self.transition_timer += 1
 
+    def powerup(self, powerup):
+        if self.state == c.STATE_TRANSITION:
+            return
+
+        self.state = c.STATE_TRANSITION
+        self.transition_state = None
+
+        if powerup == c.POWERUP_MUSHROOM:
+            self.transition_state = c.TRANSITION_SMALL_TO_BIG
+
+        self.sound_manager.play_sound(c.SOUND_POWERUP)
+
+        self.transition_timer = 0
+
     def transition(self, target_power):
         if self.state == c.STATE_TRANSITION:
             return
