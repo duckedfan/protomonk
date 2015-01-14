@@ -6,7 +6,8 @@ from src.utils import *
 from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
 from src.boxes.powerup_box import PowerUpBox
-from src.powerups.mushroom import Mushroom
+from src.enemy.goomba import Goomba
+
 
 class Level():
     def __init__(self, player, sound_manager):
@@ -20,6 +21,7 @@ class Level():
         self.brick_box_group = None
         self.powerup_group = pygame.sprite.Group()
         self.platform_group = pygame.sprite.Group()
+        self.enemy_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
@@ -31,6 +33,9 @@ class Level():
         self.background.set_colorkey(c.WHITE)
 
     def init_boxes(self):
+        # TODO test enemies
+        self.enemy_group.add(Goomba(700, 330))
+
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
         self.coin_box_group.add(CoinBox(self.sound_manager, 640, 330))
@@ -132,6 +137,9 @@ class Level():
         for powerup in self.powerup_group:
             powerup.update(game_time, self.platform_group, self.player)
 
+        for enemy in self.enemy_group:
+            enemy.update(game_time, self.platform_group, self.player)
+
     def draw(self, screen):
         screen.fill(c.WHITE)
         screen.blit(self.background, (self.world_shift, 0))
@@ -149,6 +157,9 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.draw(screen)
 
+        for enemy in self.enemy_group:
+            enemy.draw(screen)
+
 
     def shift_world(self, shift):
         self.world_shift += shift
@@ -163,3 +174,6 @@ class Level():
 
         for powerup in self.powerup_group:
             powerup.shift_world(shift)
+
+        for enemy in self.enemy_group:
+            enemy.shift_world(shift)
