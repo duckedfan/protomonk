@@ -15,6 +15,7 @@ class Level():
         self.sound_manager = sound_manager
         self.background = None
         self.world_shift = 0
+        self.viewport = 0
 
         self.ground_group = None
         self.coin_box_group = None
@@ -128,28 +129,59 @@ class Level():
         self.platform_group.add(self.ground_group)
 
     def update(self, game_time):
-        for coin_box in self.coin_box_group:
-            coin_box.update(game_time)
+        if self.player.rect.right >= c.SCREEN_WIDTH_MID:
+            diff = self.player.rect.right - c.SCREEN_WIDTH_MID
+            self.shift_world(-diff)
+            self.player.shift(diff)
+            self.world_shift += diff
+            self.viewport -= diff
+            self.player.rect.right = c.SCREEN_WIDTH_MID
 
-        for brick_box in self.brick_box_group:
-            brick_box.update(game_time)
+        #if self.player.rect.left <= constants.SCREEN_WIDTH_START:
+        #    self.player.rect.left = constants.SCREEN_WIDTH_START
+        if self.player.rect.left <= 120:
+            diff = 120 - self.player.rect.left
+            self.player.rect.left = 120
+            self.viewport += diff
+            self.world_shift -= diff
+            self.shift_world(diff)
 
-        for powerup in self.powerup_group:
-            powerup.update(game_time, self.platform_group, self.player)
+        self.player.update(self, game_time)
+        self.coin_box_group.update(game_time)
+        self.brick_box_group.update(game_time)
+        self.powerup_group.update(game_time, self.platform_group, self.player)
+        self.enemy_group.update(game_time, self.viewport)
 
+        # Platform collisions
         for enemy in self.enemy_group:
-            enemy.update(game_time, self.platform_group, self.player)
+            self.check_platform_collisions(enemy)
+
+    def check_platform_collisions(self, enemy):
+        collisions_y = pygame.sprite.spritecollideany(enemy, self.platform_group)
+        if collisions_y:
+            if enemy.y_vel < 0:
+                enemy.rect.top = collisions_y.rect.bottom
+            else:
+                enemy.rect.bottom = collisions_y.rect.top
+            enemy.y_vel = 0
+
+        collisions_x = pygame.sprite.spritecollide(enemy, self.platform_group, False)
+        for collision in collisions_x:
+            if enemy.x_vel > 0:
+                enemy.rect.right = collision.rect.left
+                enemy.direction = c.DIR_LEFT
+            elif enemy.x_vel < 0:
+                enemy.rect.left = collision.rect.right
+                enemy.direction = c.DIR_RIGHT
 
     def draw(self, screen):
-        screen.fill(c.WHITE)
-        screen.blit(self.background, (self.world_shift, 0))
+        screen.blit(self.background, (self.viewport, 0))
 
         # TODO yuck i dont like this...
         for block in self.ground_group:
             block.draw(screen)
 
-        for powerup in self.powerup_group:
-            powerup.draw(screen)
+        self.powerup_group.draw(screen)
 
         for coin_box in self.coin_box_group:
             coin_box.draw(screen)
@@ -157,9 +189,7 @@ class Level():
         for brick_box in self.brick_box_group:
             brick_box.draw(screen)
 
-        for enemy in self.enemy_group:
-            enemy.draw(screen)
-
+        self.enemy_group.draw(screen)
 
     def shift_world(self, shift):
         self.world_shift += shift
@@ -174,6 +204,3 @@ class Level():
 
         for powerup in self.powerup_group:
             powerup.shift_world(shift)
-
-        for enemy in self.enemy_group:
-            enemy.shift_world(shift)

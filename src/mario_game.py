@@ -66,21 +66,6 @@ class MarioGame(GameState):
             self.game_info.timer -= (game_time - self.mario_game_time)
             self.mario_game_time = game_time
 
-        if self.player.rect.right >= constants.SCREEN_WIDTH_MID:
-            diff = self.player.rect.right - constants.SCREEN_WIDTH_MID
-            self.level.shift_world(-diff)
-            self.player.shift(diff)
-            self.world_shift += diff
-            self.player.rect.right = constants.SCREEN_WIDTH_MID
-
-        #if self.player.rect.left <= constants.SCREEN_WIDTH_START:
-        #    self.player.rect.left = constants.SCREEN_WIDTH_START
-        if self.player.rect.left <= 120:
-            diff = 120 - self.player.rect.left
-            self.player.rect.left = 120
-            self.world_shift -= diff
-            self.level.shift_world(diff)
-
         if self.player.rect.bottom > constants.SCREEN_HEIGHT and self.player.transition_state is not constants.TRANSITION_DEATH_SEQUENCE:
             self.player.start_death_sequence()
 
@@ -90,7 +75,6 @@ class MarioGame(GameState):
             if self.game_info.num_lives < 0:
                 self.set_next_state(GameState.STATE_GAME_OVER)
 
-        self.active_sprite_list.update(self.level, game_time)
         self.level.update(game_time)
 
     def draw(self, screen):
