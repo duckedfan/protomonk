@@ -149,30 +149,42 @@ class Level():
         self.player.update(self, game_time)
         self.coin_box_group.update(game_time)
         self.brick_box_group.update(game_time)
-        self.powerup_group.update(game_time, self.platform_group, self.player)
+        self.powerup_group.update(game_time, self.viewport)
         self.enemy_group.update(game_time, self.viewport)
+
+        # Powerup collisions
+        for powerup in self.powerup_group:
+            if not powerup.emerging:
+                self.check_platform_collisions(powerup)
+            self.check_player_powerup_collisions(powerup)
 
         # Platform collisions
         for enemy in self.enemy_group:
             self.check_platform_collisions(enemy)
 
-    def check_platform_collisions(self, enemy):
-        collisions_y = pygame.sprite.spritecollideany(enemy, self.platform_group)
-        if collisions_y:
-            if enemy.y_vel < 0:
-                enemy.rect.top = collisions_y.rect.bottom
-            else:
-                enemy.rect.bottom = collisions_y.rect.top
-            enemy.y_vel = 0
+    def check_player_powerup_collisions(self, powerup):
+            player_collision = pygame.sprite.collide_rect(powerup, self.player)
+            if player_collision:
+                self.player.powerup(c.POWERUP_MUSHROOM)
+                powerup.kill()
 
-        collisions_x = pygame.sprite.spritecollide(enemy, self.platform_group, False)
+    def check_platform_collisions(self, sprite):
+        collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
+        if collisions_y:
+            if sprite.y_vel < 0:
+                sprite.rect.top = collisions_y.rect.bottom
+            else:
+                sprite.rect.bottom = collisions_y.rect.top
+            sprite.y_vel = 0
+
+        collisions_x = pygame.sprite.spritecollide(sprite, self.platform_group, False)
         for collision in collisions_x:
-            if enemy.x_vel > 0:
-                enemy.rect.right = collision.rect.left
-                enemy.direction = c.DIR_LEFT
-            elif enemy.x_vel < 0:
-                enemy.rect.left = collision.rect.right
-                enemy.direction = c.DIR_RIGHT
+            if sprite.x_vel > 0:
+                sprite.rect.right = collision.rect.left
+                sprite.direction = c.DIR_LEFT
+            elif sprite.x_vel < 0:
+                sprite.rect.left = collision.rect.right
+                sprite.direction = c.DIR_RIGHT
 
     def draw(self, screen):
         screen.blit(self.background, (self.viewport, 0))
@@ -181,7 +193,8 @@ class Level():
         for block in self.ground_group:
             block.draw(screen)
 
-        self.powerup_group.draw(screen)
+        for powerup in self.powerup_group:
+            powerup.draw(screen)
 
         for coin_box in self.coin_box_group:
             coin_box.draw(screen)
@@ -193,6 +206,10 @@ class Level():
 
     def shift_world(self, shift):
         self.world_shift += shift
+
+        for powerup in self.powerup_group:
+            powerup.shift_world(shift)
+
         for rect in self.ground_group:
             rect.rect.x += shift
 
@@ -201,6 +218,3 @@ class Level():
 
         for brick_box in self.brick_box_group:
             brick_box.rect.x += shift
-
-        for powerup in self.powerup_group:
-            powerup.shift_world(shift)

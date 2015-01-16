@@ -26,6 +26,8 @@ class PowerUpBox(pygame.sprite.Sprite):
         self.y_offset = 0
         self.empty = False
 
+        self.shift = 0
+
         self.powerup_group = pygame.sprite.Group()
 
         self.init_frames()
@@ -46,6 +48,7 @@ class PowerUpBox(pygame.sprite.Sprite):
 
     def shift_world(self, shift):
         self.rect.x += shift
+        self.shift += shift
 
     def activate(self):
         if not self.empty:
