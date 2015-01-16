@@ -6,7 +6,7 @@ from src.utils import *
 from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
 from src.boxes.powerup_box import PowerupBox
-from src.enemy.goomba import Goomba
+from src.enemies.goomba import Goomba
 from score import Score
 
 
