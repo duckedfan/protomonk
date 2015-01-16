@@ -25,7 +25,7 @@ class MarioGame(GameState):
         self.active_sprite_list = pygame.sprite.Group()
         self.active_sprite_list.add(self.player)
 
-        self.level = Level(self.player, self.sound_manager)
+        self.level = Level(game_info, self.player, self.sound_manager)
         
         #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 

@@ -70,6 +70,10 @@ TRANSITION_SMALL_TO_BIG = 'small_to_big'
 TRANSITION_BIG_TO_SMALL = 'big_to_small'
 TRANSITION_DEATH_SEQUENCE = 'death_sequence'
 
+# Enemy states
+ENEMY_STATE_ALIVE = "alive"
+ENEMY_STATE_DEAD = "dead"
+
 DIR_LEFT = "left"
 DIR_RIGHT = "right"
 
@@ -92,6 +96,8 @@ PLAYER_SMALL_H = 17
 
 # Scoring
 SCORE_COIN = 200
+SCORE_GOOMBA = 100
+SCORE_POWERUP = 1000
 
 # Powerups
 POWERUP_MUSHROOM = 'powerup_mushroom'

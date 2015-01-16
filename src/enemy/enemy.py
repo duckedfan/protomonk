@@ -2,6 +2,7 @@ __author__ = 'jkamuda'
 
 import pygame
 import src.constants as c
+from src.score import Score
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -19,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = c.DIR_RIGHT
         self.image = None
         self.rect = None
+        self.state = c.ENEMY_STATE_ALIVE
 
     def refresh_image(self, image):
         self.image = image
@@ -26,11 +28,23 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def refresh_rect(self):
+        bottom = self.rect.bottom
+        left = self.rect.left
+        self.rect = self.image.get_rect()
+        self.rect.bottom = bottom
+        self.rect.x = left
+
     def calc_gravity(self):
         if self.y_vel == 0:
             self.y_vel = 1
         else:
             self.y_vel += .45
+
+    def kill_enemy(self, score_group, points=0):
+        self.state = c.ENEMY_STATE_DEAD
+        score = Score(self.rect.x + 5, self.rect.y - 25, c.SCORE_GOOMBA)
+        score_group.add(score)
 
     def draw(self, screen):
         screen.blit(self.display_frame, (self.rect.x, self.rect.y))

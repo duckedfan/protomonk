@@ -19,7 +19,9 @@ class GameOverScreen(GameState):
         self.text_helper = TextHelper()
 
     def update(self, game_time):
-        if (game_time - self.load_screen_time) > 5000:
+        if self.load_screen_time == -1:
+            self.load_screen_time = game_time
+        elif (game_time - self.load_screen_time) > 5000:
             self.switch = True
 
     def draw(self, screen):

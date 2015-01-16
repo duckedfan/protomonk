@@ -312,6 +312,7 @@ class Player(pygame.sprite.Sprite):
         if self.state == c.STATE_TRANSITION:
             return
 
+        self.sound_manager.play_sound(c.SOUND_POWERUP)
         self.state = c.STATE_TRANSITION
         self.transition_state = None
 

@@ -7,10 +7,12 @@ from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
 from src.boxes.powerup_box import PowerupBox
 from src.enemy.goomba import Goomba
+from score import Score
 
 
 class Level():
-    def __init__(self, player, sound_manager):
+    def __init__(self, game_info, player, sound_manager):
+        self.game_info = game_info
         self.player = player
         self.sound_manager = sound_manager
         self.background = None
@@ -23,6 +25,7 @@ class Level():
         self.powerup_group = pygame.sprite.Group()
         self.platform_group = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
+        self.score_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
@@ -111,7 +114,8 @@ class Level():
         brick_set5_7 = Platform(7480, c.GROUND_HEIGHT - (c.BRICK_H * 7), c.BRICK_W * 3, c.BRICK_H)
         brick_set5_8 = Platform(7520, c.GROUND_HEIGHT - (c.BRICK_H * 8), c.BRICK_W * 2, c.BRICK_H)
 
-        brick_set5_group = pygame.sprite.Group(brick_set5_1, brick_set5_2, brick_set5_3, brick_set5_4, brick_set5_5, brick_set5_6, brick_set5_7, brick_set5_8)
+        brick_set5_group = pygame.sprite.Group(brick_set5_1, brick_set5_2, brick_set5_3, brick_set5_4, \
+                                               brick_set5_5, brick_set5_6, brick_set5_7, brick_set5_8)
 
         brick_set6_1 = Platform(7920, c.GROUND_HEIGHT - c.BRICK_H, c.BRICK_W, c.BRICK_H)
 
@@ -152,6 +156,9 @@ class Level():
         self.powerup_group.update(game_time, self.viewport)
         self.enemy_group.update(game_time, self.viewport)
 
+        for score in self.score_group:
+            score.update(game_time)
+
         # Powerup collisions
         for powerup in self.powerup_group:
             if not powerup.emerging:
@@ -162,11 +169,30 @@ class Level():
         for enemy in self.enemy_group:
             self.check_platform_collisions(enemy)
 
+        # Player collisions
+        self.check_player_enemy_collisions()
+
+    def check_player_enemy_collisions(self):
+        enemy_collisions = pygame.sprite.spritecollide(self.player, self.enemy_group, False)
+        for enemy in enemy_collisions:
+            if enemy.state is c.ENEMY_STATE_ALIVE:
+                if self.player.y_vel > 0:
+                    self.player.y_vel = -10
+                    self.player.rect.bottom = enemy.rect.top
+                    self.sound_manager.play_sound(c.SOUND_STOMP)
+                    self.game_info.points += enemy.kill_enemy(self.score_group)
+                else:
+                    if self.player.power == c.POWER_SMALL:
+                        self.player.start_death_sequence()
+                    else:
+                        self.player.transition(c.POWER_SMALL)
+
+
     def check_player_powerup_collisions(self, powerup):
-            player_collision = pygame.sprite.collide_rect(powerup, self.player)
-            if player_collision:
-                self.player.powerup(c.POWERUP_MUSHROOM)
-                powerup.kill()
+        player_collision = pygame.sprite.collide_rect(powerup, self.player)
+        if player_collision:
+            self.player.powerup(c.POWERUP_MUSHROOM)
+            powerup.kill()
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
@@ -204,6 +230,9 @@ class Level():
 
         self.enemy_group.draw(screen)
 
+        for score in self.score_group:
+            score.draw(screen)
+
     def shift_world(self, shift):
         self.world_shift += shift
 
@@ -218,3 +247,6 @@ class Level():
 
         for brick_box in self.brick_box_group:
             brick_box.shift_world(shift)
+
+        for score in self.score_group:
+            score.shift_world(shift)
