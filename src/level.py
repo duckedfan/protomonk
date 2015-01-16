@@ -5,7 +5,7 @@ from src.platform import Platform
 from src.utils import *
 from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
-from src.boxes.powerup_box import PowerUpBox
+from src.boxes.powerup_box import PowerupBox
 from src.enemy.goomba import Goomba
 
 
@@ -40,7 +40,7 @@ class Level():
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
         self.coin_box_group.add(CoinBox(self.sound_manager, 640, 330))
-        self.coin_box_group.add(PowerUpBox(self.sound_manager, self.powerup_group, 880, 330))
+        self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 880, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 960, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 920, 200))
 
@@ -217,4 +217,4 @@ class Level():
             coin_box.shift_world(shift)
 
         for brick_box in self.brick_box_group:
-            brick_box.rect.x += shift
+            brick_box.shift_world(shift)

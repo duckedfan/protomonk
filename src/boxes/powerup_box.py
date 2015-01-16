@@ -1,41 +1,28 @@
 __author__ = 'jkamuda'
 
-import pygame
-
+from box import Box
 from src import coordinates as coords
 from .. import constants as c
 from src.spritesheet import SpriteSheet
 from src.powerups.mushroom import Mushroom
 
 
-class PowerUpBox(pygame.sprite.Sprite):
+class PowerupBox(Box):
     def __init__(self, sound_manager, group, x, y, powerup=c.POWERUP_MUSHROOM):
-        pygame.sprite.Sprite.__init__(self)
+        Box.__init__(self, sound_manager, x, y)
 
-        self.sound_manager = sound_manager
         self.group = group
         self.powerup = powerup
         self.empty_frame = None
-        self.display_frame = None
         self.coin_box_frames = []
         self.frame_idx = 0
         self.coin_box_time = 0
         self.game_time = 0
-        self.in_transition = False
         self.transition_time = 0
-        self.y_offset = 0
         self.empty = False
 
-        self.shift = 0
-
-        self.powerup_group = pygame.sprite.Group()
-
         self.init_frames()
-
-        self.image = self.coin_box_frames[0]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.refresh_image(self.coin_box_frames[0])
 
     def init_frames(self):
         sprite_sheet = SpriteSheet("data\\tile_set.png")
@@ -45,10 +32,6 @@ class PowerUpBox(pygame.sprite.Sprite):
         self.coin_box_frames.append(sprite_sheet.get_image(coords.COIN_BOX_3, c.IMG_MULTIPLIER, c.WHITE))
 
         self.empty_frame = sprite_sheet.get_image(coords.COIN_BOX_EMPTY, c.IMG_MULTIPLIER, c.WHITE)
-
-    def shift_world(self, shift):
-        self.rect.x += shift
-        self.shift += shift
 
     def activate(self):
         if not self.empty:
@@ -95,6 +78,3 @@ class PowerUpBox(pygame.sprite.Sprite):
         powerup = Mushroom(self.rect.x, self.rect.top)
         self.group.add(powerup)
         self.empty = True
-
-    def draw(self, screen):
-        screen.blit(self.display_frame, (self.rect.x, self.rect.y - self.y_offset))

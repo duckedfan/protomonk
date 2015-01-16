@@ -2,6 +2,7 @@ __author__ = 'jkamuda'
 
 import pygame
 
+from box import Box
 from src import coordinates as coords
 from src import constants as c
 from src.spritesheet import SpriteSheet
@@ -9,30 +10,22 @@ from src.coin import Coin
 from src.score import Score
 
 
-class CoinBox(pygame.sprite.Sprite):
+class CoinBox(Box):
     def __init__(self, sound_manager, x, y, num_coins=1):
-        pygame.sprite.Sprite.__init__(self)
+        Box.__init__(self, sound_manager, x, y)
 
-        self.sound_manager = sound_manager
         self.num_coins = num_coins
         self.empty_frame = None
-        self.display_frame = None
         self.coin_box_frames = []
         self.frame_idx = 0
         self.coin_box_time = 0
         self.game_time = 0
-        self.in_transition = False
         self.transition_time = 0
-        self.y_offset = 0
 
         self.coin_score_group = pygame.sprite.Group()
 
         self.init_frames()
-
-        self.image = self.coin_box_frames[0]
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.refresh_image(self.coin_box_frames[0])
 
     def init_frames(self):
         sprite_sheet = SpriteSheet("data\\tile_set.png")
@@ -44,8 +37,7 @@ class CoinBox(pygame.sprite.Sprite):
         self.empty_frame = sprite_sheet.get_image(coords.COIN_BOX_EMPTY, c.IMG_MULTIPLIER, c.WHITE)
 
     def shift_world(self, shift):
-        self.rect.x += shift
-
+        super(CoinBox, self).shift_world(shift)
         for item in self.coin_score_group:
             item.shift_world(shift)
 
@@ -105,6 +97,6 @@ class CoinBox(pygame.sprite.Sprite):
         self.coin_score_group.add(coin)
 
     def draw(self, screen):
-        screen.blit(self.display_frame, (self.rect.x, self.rect.y - self.y_offset))
+        super(CoinBox, self).draw(screen)
         for item in self.coin_score_group:
             item.draw(screen)
