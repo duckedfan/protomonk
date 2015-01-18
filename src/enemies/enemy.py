@@ -6,11 +6,12 @@ from src.score import Score
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, kill_score):
         pygame.sprite.Sprite.__init__(self)
 
         self.x = x
         self.y = y
+        self.kill_score = kill_score
         self.y_vel = 0
         self.x_vel = 0
         self.frame_idx = 0
@@ -41,9 +42,9 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.y_vel += .45
 
-    def kill_enemy(self, score_group, points=0):
+    def kill_enemy(self, score_group):
         self.state = c.ENEMY_STATE_DEAD
-        score = Score(self.rect.x + 5, self.rect.y - 25, c.SCORE_GOOMBA)
+        score = Score(self.rect.x + 5, self.rect.y - 25, self.kill_score)
         score_group.add(score)
 
     def draw(self, screen):

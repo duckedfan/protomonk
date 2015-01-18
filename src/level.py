@@ -192,6 +192,9 @@ class Level():
         player_collision = pygame.sprite.collide_rect(powerup, self.player)
         if player_collision:
             self.player.powerup(c.POWERUP_MUSHROOM)
+            self.game_info.points += c.SCORE_POWERUP
+            score = Score(powerup.rect.x + 5, powerup.rect.y - 25, c.SCORE_POWERUP)
+            self.score_group.add(score)
             powerup.kill()
 
     def check_platform_collisions(self, sprite):

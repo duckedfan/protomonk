@@ -9,7 +9,7 @@ import src.coordinates as coords
 
 class Goomba(Enemy):
     def __init__(self, x, y):
-        Enemy.__init__(self, x, y)
+        Enemy.__init__(self, x, y, c.SCORE_GOOMBA)
 
         self.goomba_frames = []
         self.dead_frame = None
@@ -26,10 +26,10 @@ class Goomba(Enemy):
         self.dead_frame = sprite_sheet.get_image(coords.GOOMBA_DEAD, c.IMG_MULTIPLIER, c.BLACK)
 
     def kill_enemy(self, score_group, points=0):
-        super(Goomba, self).kill_enemy(score_group, c.SCORE_GOOMBA)
+        super(Goomba, self).kill_enemy(score_group)
         self.image = self.dead_frame
         self.refresh_rect()
-        return c.SCORE_GOOMBA
+        return self.kill_score
 
     def update(self, game_time, viewport):
         time_delta = game_time - self.enemy_time
