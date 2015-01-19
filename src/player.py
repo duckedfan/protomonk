@@ -205,7 +205,10 @@ class Player(pygame.sprite.Sprite):
         if brick_box_collisions_y:
             if self.y_vel < 0:
                 self.rect.top = brick_box_collisions_y.rect.bottom
-                brick_box_collisions_y.activate()
+                if self.power == c.POWER_SMALL:
+                    brick_box_collisions_y.activate()
+                else:
+                    brick_box_collisions_y.explode()
                 brick_box_collisions_y.update(current_time)
             else:
                 self.rect.bottom = brick_box_collisions_y.rect.top

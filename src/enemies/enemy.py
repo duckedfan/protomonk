@@ -17,7 +17,6 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_idx = 0
         self.enemy_time = 0
         self.dead = False
-        self.display_frame = None
         self.direction = c.DIR_RIGHT
         self.image = None
         self.rect = None
@@ -46,6 +45,4 @@ class Enemy(pygame.sprite.Sprite):
         self.state = c.ENEMY_STATE_DEAD
         score = Score(self.rect.x + 5, self.rect.y - 25, self.kill_score)
         score_group.add(score)
-
-    def draw(self, screen):
-        screen.blit(self.display_frame, (self.rect.x, self.rect.y))
+        return self.kill_score

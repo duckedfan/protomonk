@@ -34,7 +34,7 @@ class Level():
     def init_background(self):
         self.background = pygame.image.load("data/levels/level_1.png").convert()
         self.background = scale_image(self.background, c.IMG_MULTIPLIER)
-        self.background.set_colorkey(c.WHITE)
+        #self.background.set_colorkey(c.WHITE)
 
     def init_boxes(self):
         # TODO test enemies
@@ -216,6 +216,7 @@ class Level():
                 sprite.direction = c.DIR_RIGHT
 
     def draw(self, screen):
+        screen.fill(c.WHITE)
         screen.blit(self.background, (self.viewport, 0))
 
         # TODO yuck i dont like this...

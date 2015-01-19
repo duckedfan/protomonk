@@ -34,6 +34,9 @@ TITLE_SELECTOR = (24, 160, 8, 8)
 
 MUSHROOM_POWERUP = (0, 16, 16, 16)
 
+BRICK_PIECE_LEFT = (68, 36, 8, 8)
+BRICK_PIECE_RIGHT = (68, 20, 8, 8)
+
 # tile_set.png
 COIN_BOX_1 = (384, 0, 16, 16)
 COIN_BOX_2 = (400, 0, 16, 16)

@@ -31,6 +31,7 @@ class Coin(pygame.sprite.Sprite):
         self.init_frames()
 
         self.image = self.coin_frames[0]
+        self.display_frame = self.image
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
