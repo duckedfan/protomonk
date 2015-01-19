@@ -23,7 +23,7 @@ class Goomba(Enemy):
 
         self.goomba_frames.append(sprite_sheet.get_image(coords.GOOMBA_LEFT, c.IMG_MULTIPLIER, c.BLUE))
         self.goomba_frames.append(sprite_sheet.get_image(coords.GOOMBA_RIGHT, c.IMG_MULTIPLIER, c.BLUE))
-        self.dead_frame = sprite_sheet.get_image(coords.GOOMBA_DEAD, c.IMG_MULTIPLIER, c.BLACK)
+        self.dead_frame = sprite_sheet.get_image(coords.GOOMBA_DEAD, c.IMG_MULTIPLIER, c.BLUE)
 
     def update(self, game_time, viewport):
         time_delta = game_time - self.enemy_time
