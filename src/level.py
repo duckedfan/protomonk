@@ -26,6 +26,7 @@ class Level():
         self.platform_group = pygame.sprite.Group()
         self.enemy_group = pygame.sprite.Group()
         self.score_group = pygame.sprite.Group()
+        self.brick_piece_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
@@ -153,6 +154,7 @@ class Level():
         self.player.update(self, game_time)
         self.coin_box_group.update(game_time)
         self.brick_box_group.update(game_time)
+        self.brick_piece_group.update(game_time)
         self.powerup_group.update(game_time, self.viewport)
         self.enemy_group.update(game_time, self.viewport)
 
@@ -233,6 +235,7 @@ class Level():
             brick_box.draw(screen)
 
         self.enemy_group.draw(screen)
+        self.brick_piece_group.draw(screen)
 
         for score in self.score_group:
             score.draw(screen)
@@ -251,6 +254,9 @@ class Level():
 
         for brick_box in self.brick_box_group:
             brick_box.shift_world(shift)
+
+        for brick_piece in self.brick_piece_group:
+            brick_piece.shift_world(shift)
 
         for score in self.score_group:
             score.shift_world(shift)

@@ -4,6 +4,7 @@ import src.constants as c
 from src.spritesheet import SpriteSheet
 from src.utils import *
 from src import coordinates as coords
+from src.boxes.brick_piece import BrickPiece
 
 
 class Player(pygame.sprite.Sprite):
@@ -208,8 +209,18 @@ class Player(pygame.sprite.Sprite):
                 if self.power == c.POWER_SMALL:
                     brick_box_collisions_y.activate()
                 else:
-                    brick_box_collisions_y.explode()
+                    brick_box_collisions_y.kill()
+                    box_rect = brick_box_collisions_y.rect
 
+                    brick_piece_nw = BrickPiece(box_rect.left + 5, box_rect.top + 5, -2, -5)
+                    brick_piece_sw = BrickPiece(box_rect.left + 5, box_rect.bottom - 20, -2, -3)
+                    brick_piece_ne = BrickPiece(box_rect.right - 5, box_rect.top + 5, 2, -5)
+                    brick_piece_se = BrickPiece(box_rect.right - 5, box_rect.bottom - 20, 2, -3)
+
+                    level.brick_piece_group.add(brick_piece_nw)
+                    level.brick_piece_group.add(brick_piece_sw)
+                    level.brick_piece_group.add(brick_piece_ne)
+                    level.brick_piece_group.add(brick_piece_se)
                 brick_box_collisions_y.update(current_time)
             else:
                 self.rect.bottom = brick_box_collisions_y.rect.top
