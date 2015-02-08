@@ -7,6 +7,7 @@ from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
 from src.boxes.powerup_box import PowerupBox
 from src.enemies.goomba import Goomba
+from checkpoint import Checkpoint
 from score import Score
 
 
@@ -27,15 +28,16 @@ class Level():
         self.enemy_group = pygame.sprite.Group()
         self.score_group = pygame.sprite.Group()
         self.brick_piece_group = pygame.sprite.Group()
+        self.checkpoint_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
         self.init_boxes()
+        self.init_checkpoints()
 
     def init_background(self):
         self.background = pygame.image.load("data/levels/level_1.png").convert()
         self.background = scale_image(self.background, c.IMG_MULTIPLIER)
-        #self.background.set_colorkey(c.WHITE)
 
     def init_boxes(self):
         # TODO test enemies
@@ -133,6 +135,9 @@ class Level():
 
         self.platform_group.add(self.ground_group)
 
+    def init_checkpoints(self):
+        self.checkpoint_group.add(Checkpoint("goomba_set_1", 1200))
+
     def update(self, game_time):
         if self.player.rect.right >= c.SCREEN_WIDTH_MID:
             diff = self.player.rect.right - c.SCREEN_WIDTH_MID
@@ -177,6 +182,8 @@ class Level():
         # Player collisions
         self.check_player_enemy_collisions()
 
+        self.check_player_checkpoint_collisions()
+
     def check_player_enemy_collisions(self):
         enemy_collisions = pygame.sprite.spritecollide(self.player, self.enemy_group, False)
         for enemy in enemy_collisions:
@@ -201,6 +208,15 @@ class Level():
             score = Score(powerup.rect.x + 5, powerup.rect.y - 25, c.SCORE_POWERUP)
             self.score_group.add(score)
             powerup.kill()
+
+    def check_player_checkpoint_collisions(self):
+        checkpoint_collisions = pygame.sprite.spritecollide(self.player, self.checkpoint_group, True)
+        for checkpoint in checkpoint_collisions:
+            if checkpoint.name == "goomba_set_1":
+                self.enemy_group.add(Goomba(1700, 330))
+                self.enemy_group.add(Goomba(2050, 330))
+                self.enemy_group.add(Goomba(2100, 330))
+
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
@@ -240,6 +256,9 @@ class Level():
         self.enemy_group.draw(screen)
         self.brick_piece_group.draw(screen)
 
+        if c.DEBUG:
+            self.checkpoint_group.draw(screen)
+
         for score in self.score_group:
             score.draw(screen)
 
@@ -263,3 +282,6 @@ class Level():
 
         for score in self.score_group:
             score.shift_world(shift)
+
+        for checkpoint in self.checkpoint_group:
+            checkpoint.shift_world(shift)

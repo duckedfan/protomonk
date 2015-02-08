@@ -4,7 +4,7 @@ __author__ = 'jkamuda'
 Global constants
 """
 
-DEBUG = False
+DEBUG = True
 
 # Colors
 BLACK  = (  0,   0,   0)
