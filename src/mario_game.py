@@ -31,7 +31,7 @@ class MarioGame(GameState):
         if constants.DEBUG:
             self.debug_overlay = DebugOverlay(self.game_info, self.player)
 
-        #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
+        self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
     def process_events(self, events):
         for event in events:

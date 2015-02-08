@@ -186,9 +186,11 @@ class Level():
                 self.check_platform_collisions(powerup)
             self.check_player_powerup_collisions(powerup)
 
-        # Platform collisions
+        # Enemy spite checks
         for enemy in self.enemy_group:
             self.check_platform_collisions(enemy)
+            if enemy.rect.y > c.SCREEN_HEIGHT:
+                enemy.kill()
 
         # Player collisions
         self.check_player_enemy_collisions()
