@@ -8,8 +8,8 @@ import src.coordinates as coords
 
 
 class Goomba(Enemy):
-    def __init__(self, x, y):
-        Enemy.__init__(self, x, y, c.SCORE_GOOMBA)
+    def __init__(self, x, y, direction=c.DIR_RIGHT):
+        Enemy.__init__(self, x, y, c.SCORE_GOOMBA, direction)
 
         self.goomba_frames = []
         self.dead_frame = None

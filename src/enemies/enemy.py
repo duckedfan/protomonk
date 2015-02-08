@@ -6,7 +6,7 @@ from src.score import Score
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, kill_score):
+    def __init__(self, x, y, kill_score, direction=c.DIR_LEFT):
         pygame.sprite.Sprite.__init__(self)
 
         self.x = x
@@ -17,7 +17,7 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_idx = 0
         self.enemy_time = 0
         self.dead = False
-        self.direction = c.DIR_RIGHT
+        self.direction = direction
         self.image = None
         self.rect = None
         self.state = c.ENEMY_STATE_ALIVE

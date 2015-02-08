@@ -48,13 +48,32 @@ class Level():
         self.coin_box_group.add(CoinBox(self.sound_manager, 640, 330))
         self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 880, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 960, 330))
-        self.coin_box_group.add(CoinBox(self.sound_manager, 920, 200))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 920, 180))
+        #self.coin_box_group.add(CoinBox(self.sound_manager, 3120, 330))
+        self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 3120, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 3760, 180))
 
         # Brick boxes
         self.brick_box_group = pygame.sprite.Group()
         self.brick_box_group.add(BrickBox(self.sound_manager, 840, 330))
         self.brick_box_group.add(BrickBox(self.sound_manager, 920, 330))
         self.brick_box_group.add(BrickBox(self.sound_manager, 1000, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3080, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3160, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3200, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3240, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3280, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3320, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3360, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3400, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3440, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3480, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3640, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3680, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3720, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 3760, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4020, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4060, 330))
 
         self.platform_group.add(self.coin_box_group)
         self.platform_group.add(self.brick_box_group)
@@ -137,6 +156,7 @@ class Level():
 
     def init_checkpoints(self):
         self.checkpoint_group.add(Checkpoint("goomba_set_1", 1200))
+        self.checkpoint_group.add(Checkpoint("goomba_set_2", 2600))
 
     def update(self, game_time):
         if self.player.rect.right >= c.SCREEN_WIDTH_MID:
@@ -207,6 +227,9 @@ class Level():
                 self.enemy_group.add(Goomba(1700, 330))
                 self.enemy_group.add(Goomba(2050, 330))
                 self.enemy_group.add(Goomba(2100, 330))
+            if checkpoint.name == "goomba_set_2":
+                self.enemy_group.add(Goomba(3380, 160, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(3440, 160, c.DIR_LEFT))
 
 
     def check_platform_collisions(self, sprite):
