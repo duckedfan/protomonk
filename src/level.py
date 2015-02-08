@@ -147,17 +147,8 @@ class Level():
             self.viewport -= diff
             self.player.rect.right = c.SCREEN_WIDTH_MID
 
-        if c.DEBUG:
-            # debug powa mode allows player to side-scroll to the left
-            if self.player.rect.left <= 120:
-                diff = 120 - self.player.rect.left
-                self.player.rect.left = 120
-                self.viewport += diff
-                self.world_shift -= diff
-                self.shift_world(diff)
-        else:
-            if self.player.rect.left <= c.SCREEN_WIDTH_START:
-                self.player.rect.left = c.SCREEN_WIDTH_START
+        if self.player.rect.left <= c.SCREEN_WIDTH_START:
+            self.player.rect.left = c.SCREEN_WIDTH_START
 
         self.player.update(self, game_time)
         self.coin_box_group.update(game_time)
