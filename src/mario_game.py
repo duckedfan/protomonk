@@ -6,6 +6,7 @@ from game_state import GameState
 import constants
 from src.level import Level
 from src.player import Player
+from debug_overlay import DebugOverlay
 
 
 class MarioGame(GameState):
@@ -26,7 +27,10 @@ class MarioGame(GameState):
         self.active_sprite_list.add(self.player)
 
         self.level = Level(game_info, self.player, self.sound_manager)
-        
+
+        if constants.DEBUG:
+            self.debug_overlay = DebugOverlay(self.game_info, self.player)
+
         #self.sound_manager.play_music(constants.MUSIC_MAIN_THEME)
 
     def process_events(self, events):
@@ -80,3 +84,6 @@ class MarioGame(GameState):
     def draw(self, screen):
         self.level.draw(screen)
         self.active_sprite_list.draw(screen)
+
+        if constants.DEBUG:
+            self.debug_overlay.draw(screen)

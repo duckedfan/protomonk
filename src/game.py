@@ -5,7 +5,6 @@ import os
 import pygame
 
 import constants
-from player import Player
 from src.sound import SoundManager
 from menu import Menu
 from overhead import Overhead
@@ -48,13 +47,6 @@ class Game():
 
         running = True
         clock = pygame.time.Clock()
-
-        active_sprite_list = pygame.sprite.Group()
-        player = Player(self.sound_manager, self.game_info)
-        player.rect.x = 100
-        player.rect.bottom = constants.GROUND_HEIGHT
-
-        active_sprite_list.add(player)
 
         overhead_info = Overhead(self.game_info)
         game_state = self.get_game_state(GameState.STATE_MENU)

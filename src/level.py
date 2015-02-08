@@ -147,8 +147,8 @@ class Level():
             self.viewport -= diff
             self.player.rect.right = c.SCREEN_WIDTH_MID
 
-        # debug powa mode allowing player to side-scroll to the left
         if c.DEBUG:
+            # debug powa mode allows player to side-scroll to the left
             if self.player.rect.left <= 120:
                 diff = 120 - self.player.rect.left
                 self.player.rect.left = 120
