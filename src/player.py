@@ -212,6 +212,8 @@ class Player(pygame.sprite.Sprite):
                     brick_box_collisions_y.kill()
                     box_rect = brick_box_collisions_y.rect
 
+                    self.sound_manager.play_sound(c.SOUND_BRICK_SMASH)
+
                     brick_piece_nw = BrickPiece(box_rect.left + 5, box_rect.top + 5, -2, -5)
                     brick_piece_sw = BrickPiece(box_rect.left + 5, box_rect.bottom - 20, -2, -3)
                     brick_piece_ne = BrickPiece(box_rect.right - 5, box_rect.top + 5, 2, -5)
