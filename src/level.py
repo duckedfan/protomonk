@@ -49,7 +49,6 @@ class Level():
         self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 880, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 960, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 920, 180))
-        #self.coin_box_group.add(CoinBox(self.sound_manager, 3120, 330))
         self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 3120, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 3760, 180))
 
@@ -186,7 +185,7 @@ class Level():
                 self.check_platform_collisions(powerup)
             self.check_player_powerup_collisions(powerup)
 
-        # Enemy spite checks
+        # Enemy sprite checks
         for enemy in self.enemy_group:
             self.check_platform_collisions(enemy)
             if enemy.rect.y > c.SCREEN_HEIGHT:
@@ -232,7 +231,6 @@ class Level():
             if checkpoint.name == "goomba_set_2":
                 self.enemy_group.add(Goomba(3380, 160, c.DIR_LEFT))
                 self.enemy_group.add(Goomba(3440, 160, c.DIR_LEFT))
-
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
