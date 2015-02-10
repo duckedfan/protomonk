@@ -241,6 +241,8 @@ class Level():
                 sprite.rect.bottom = collisions_y.rect.top
             sprite.y_vel = 0
 
+        x_test_offset = -1 if sprite.direction is c.DIR_LEFT else 1
+        sprite.rect.x += x_test_offset
         collisions_x = pygame.sprite.spritecollide(sprite, self.platform_group, False)
         for collision in collisions_x:
             if sprite.x_vel > 0:
@@ -249,6 +251,7 @@ class Level():
             elif sprite.x_vel < 0:
                 sprite.rect.left = collision.rect.right
                 sprite.direction = c.DIR_RIGHT
+        sprite.rect.x -= x_test_offset
 
     def draw(self, screen):
         screen.fill(c.WHITE)
