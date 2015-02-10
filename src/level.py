@@ -224,7 +224,7 @@ class Level():
         for enemy in enemy_collisions:
             if enemy.state is c.ENEMY_STATE_ALIVE:
                 if self.player.y_vel > 0:
-                    self.player.y_vel = -10
+                    self.player.y_vel = -5
                     self.player.rect.bottom = enemy.rect.top
                     self.sound_manager.play_sound(c.SOUND_STOMP)
                     self.game_info.points += enemy.kill_enemy(self.score_group)
@@ -233,7 +233,6 @@ class Level():
                         self.player.start_death_sequence()
                     else:
                         self.player.transition(c.POWER_SMALL)
-
 
     def check_player_powerup_collisions(self, powerup):
         player_collision = pygame.sprite.collide_rect(powerup, self.player)
