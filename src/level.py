@@ -41,7 +41,7 @@ class Level():
 
     def init_boxes(self):
         # TODO test enemies
-        self.enemy_group.add(Goomba(700, 330))
+        self.enemy_group.add(Goomba(800, 440))
 
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
@@ -51,6 +51,12 @@ class Level():
         self.coin_box_group.add(CoinBox(self.sound_manager, 920, 180))
         self.coin_box_group.add(PowerupBox(self.sound_manager, self.powerup_group, 3120, 330))
         self.coin_box_group.add(CoinBox(self.sound_manager, 3760, 180))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 4230, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 4360, 180))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 4360, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 4490, 330))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 5150, 180))
+        self.coin_box_group.add(CoinBox(self.sound_manager, 6800, 330))
 
         # Brick boxes
         self.brick_box_group = pygame.sprite.Group()
@@ -71,8 +77,20 @@ class Level():
         self.brick_box_group.add(BrickBox(self.sound_manager, 3680, 180))
         self.brick_box_group.add(BrickBox(self.sound_manager, 3720, 180))
         self.brick_box_group.add(BrickBox(self.sound_manager, 3760, 330))
-        self.brick_box_group.add(BrickBox(self.sound_manager, 4020, 330))
-        self.brick_box_group.add(BrickBox(self.sound_manager, 4060, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4000, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4040, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4720, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4830, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4870, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 4910, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 5110, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 5150, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 5190, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 5190, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 5230, 180))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 6720, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 6760, 330))
+        self.brick_box_group.add(BrickBox(self.sound_manager, 6840, 330))
 
         self.platform_group.add(self.coin_box_group)
         self.platform_group.add(self.brick_box_group)
@@ -156,6 +174,11 @@ class Level():
     def init_checkpoints(self):
         self.checkpoint_group.add(Checkpoint("goomba_set_1", 1200))
         self.checkpoint_group.add(Checkpoint("goomba_set_2", 2600))
+        self.checkpoint_group.add(Checkpoint("goomba_set_3", 3400))
+        self.checkpoint_group.add(Checkpoint("goomba_set_4", 4100))
+        self.checkpoint_group.add(Checkpoint("goomba_set_5", 4610))
+        self.checkpoint_group.add(Checkpoint("goomba_set_6", 4720))
+        self.checkpoint_group.add(Checkpoint("goomba_set_7", 6210))
 
     def update(self, game_time):
         if self.player.rect.right >= c.SCREEN_WIDTH_MID:
@@ -225,12 +248,27 @@ class Level():
         checkpoint_collisions = pygame.sprite.spritecollide(self.player, self.checkpoint_group, True)
         for checkpoint in checkpoint_collisions:
             if checkpoint.name == "goomba_set_1":
-                self.enemy_group.add(Goomba(1700, 330))
-                self.enemy_group.add(Goomba(2050, 330))
-                self.enemy_group.add(Goomba(2100, 330))
+                self.enemy_group.add(Goomba(1700, 440))
+                self.enemy_group.add(Goomba(2050, 440))
+                self.enemy_group.add(Goomba(2100, 440))
             if checkpoint.name == "goomba_set_2":
                 self.enemy_group.add(Goomba(3380, 160, c.DIR_LEFT))
                 self.enemy_group.add(Goomba(3440, 160, c.DIR_LEFT))
+            if checkpoint.name == "goomba_set_3":
+                self.enemy_group.add(Goomba(3900, 440, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(3960, 440, c.DIR_LEFT))
+            if checkpoint.name == "goomba_set_4":
+                self.enemy_group.add(Goomba(4600, 440, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(4660, 440, c.DIR_LEFT))
+            if checkpoint.name == "goomba_set_5":
+                self.enemy_group.add(Goomba(5100, 440, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(5160, 440, c.DIR_LEFT))
+            if checkpoint.name == "goomba_set_6":
+                self.enemy_group.add(Goomba(5150, 440, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(5210, 440, c.DIR_LEFT))
+            if checkpoint.name == "goomba_set_7":
+                self.enemy_group.add(Goomba(6860, 440, c.DIR_LEFT))
+                self.enemy_group.add(Goomba(6920, 440, c.DIR_LEFT))
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
