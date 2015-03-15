@@ -17,7 +17,7 @@ class BrickBox(Box):
         self.refresh_image(self.display_frame)
 
     def init_frames(self):
-        sprite_sheet = SpriteSheet("data\\tile_set.png")
+        sprite_sheet = SpriteSheet("data/tile_set.png")
         self.display_frame = sprite_sheet.get_image(coords.BRICK, c.IMG_MULTIPLIER, c.WHITE)
 
     def activate(self):

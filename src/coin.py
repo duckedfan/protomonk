@@ -37,7 +37,7 @@ class Coin(pygame.sprite.Sprite):
         self.rect.y = self.y
 
     def init_frames(self):
-        sprite_sheet = SpriteSheet("data\item_objects.png")
+        sprite_sheet = SpriteSheet("data/item_objects.png")
 
         self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_1, constants.IMG_MULTIPLIER))
         self.coin_frames.append(sprite_sheet.get_image(coords.COIN_SPINNING_2, constants.IMG_MULTIPLIER))

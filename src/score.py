@@ -25,7 +25,7 @@ class Score(pygame.sprite.Sprite):
         self.build_digit_images()
 
     def init_score_dictionary(self):
-        tile_set = SpriteSheet("data\item_objects.png")
+        tile_set = SpriteSheet("data/item_objects.png")
 
         self.score_dict[0] = tile_set.get_image(coords.SCORE_WHITE_0, c.IMG_MULTIPLIER)
         self.score_dict[1] = tile_set.get_image(coords.SCORE_WHITE_1, c.IMG_MULTIPLIER)

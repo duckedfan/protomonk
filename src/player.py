@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.transition_frames = {}
         self.death_frame = None
 
-        self.sprite_sheet = SpriteSheet("data\characters.gif")
+        self.sprite_sheet = SpriteSheet("data/characters.gif")
 
         self.load_player_small_frames()
         self.load_player_adult_frames()

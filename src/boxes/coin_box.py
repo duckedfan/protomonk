@@ -28,7 +28,7 @@ class CoinBox(Box):
         self.refresh_image(self.coin_box_frames[0])
 
     def init_frames(self):
-        sprite_sheet = SpriteSheet("data\\tile_set.png")
+        sprite_sheet = SpriteSheet("data/tile_set.png")
 
         self.coin_box_frames.append(sprite_sheet.get_image(coords.COIN_BOX_1, c.IMG_MULTIPLIER, c.WHITE))
         self.coin_box_frames.append(sprite_sheet.get_image(coords.COIN_BOX_2, c.IMG_MULTIPLIER, c.WHITE))

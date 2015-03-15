@@ -23,8 +23,8 @@ IMG_MULTIPLIER = 2.5
 
 # Sound
 SOUND_EXTENSIONS = ('.wav', '.ogg', '.mp3')
-SOUND_DIR = 'data\sound'
-MUSIC_DIR = 'data\music'
+SOUND_DIR = 'data/sound'
+MUSIC_DIR = 'data/music'
 
 # Sound options
 SOUND_BIG_JUMP = 'big_jump'

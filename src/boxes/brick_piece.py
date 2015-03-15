@@ -22,7 +22,7 @@ class BrickPiece(pygame.sprite.Sprite):
         self.rect.y = y
 
     def init_image(self):
-        sprite_sheet = SpriteSheet("data\item_objects.png")
+        sprite_sheet = SpriteSheet("data/item_objects.png")
 
         if self.x_vel < 0:
             self.image = sprite_sheet.get_image(coords.BRICK_PIECE_LEFT, c.IMG_MULTIPLIER, c.WHITE)

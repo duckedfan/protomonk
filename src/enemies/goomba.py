@@ -19,7 +19,7 @@ class Goomba(Enemy):
         self.refresh_image(self.goomba_frames[0])
 
     def init_frames(self):
-        sprite_sheet = SpriteSheet("data\characters.gif")
+        sprite_sheet = SpriteSheet("data/characters.gif")
 
         self.goomba_frames.append(sprite_sheet.get_image(coords.GOOMBA_LEFT, c.IMG_MULTIPLIER, c.BLUE))
         self.goomba_frames.append(sprite_sheet.get_image(coords.GOOMBA_RIGHT, c.IMG_MULTIPLIER, c.BLUE))

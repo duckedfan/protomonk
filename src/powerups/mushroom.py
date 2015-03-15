@@ -10,7 +10,7 @@ class Mushroom(Powerup):
     def __init__(self, x, y):
         Powerup.__init__(self, x, y)
 
-        sprite_sheet = SpriteSheet("data\item_objects.png")
+        sprite_sheet = SpriteSheet("data/item_objects.png")
 
         self.x_vel = 2
 

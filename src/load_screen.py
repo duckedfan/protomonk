@@ -16,7 +16,7 @@ class LoadScreen(GameState):
 
         self.load_screen_time = -1
         # Mario frame
-        sprite_sheet = SpriteSheet("data\characters.gif")
+        sprite_sheet = SpriteSheet("data/characters.gif")
         self.mario_frame = sprite_sheet.get_image(coords.MARIO_SMALL_STANDING_RIGHT, c.IMG_MULTIPLIER)
 
     def update(self, game_time):
