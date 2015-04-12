@@ -76,6 +76,7 @@ ENEMY_STATE_DEAD = "dead"
 
 DIR_LEFT = "left"
 DIR_RIGHT = "right"
+DIR_NONE = "none"
 
 # Object dimensions
 PIPE_W = 80
@@ -99,6 +100,8 @@ SCORE_COIN = 200
 SCORE_GOOMBA = 100
 SCORE_KOOPA = 100
 SCORE_POWERUP = 1000
+
+SHELL_GREEN = 'shell_green'
 
 # Powerups
 POWERUP_MUSHROOM = 'powerup_mushroom'

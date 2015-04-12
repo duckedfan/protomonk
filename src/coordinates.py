@@ -87,6 +87,8 @@ KOOPA_GREEN_RIGHT_2 = (296, 187, 16, 16)
 KOOPA_GREEN_LEFT_1 = (180, 205, 18, 25)
 KOOPA_GREEN_LEFT_2 = (199, 204, 18, 25)
 
+SHELL_GREEN = (144, 216, 15, 15)
+
 # text_images.png
 NUM_0 = (3, 230, 7, 7)
 NUM_1 = (12, 230, 6, 7)

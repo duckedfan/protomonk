@@ -4,10 +4,14 @@ from enemy import Enemy
 from src.spritesheet import SpriteSheet
 import src.constants as c
 import src.coordinates as coords
+from src.objects.shell import Shell
+
 
 class Koopa(Enemy):
-    def __init__(self, x, y, direction=c.DIR_LEFT):
+    def __init__(self, x, y, shell_group, direction=c.DIR_LEFT):
         Enemy.__init__(self, x, y, c.SCORE_KOOPA, direction)
+
+        self.shell_group = shell_group
 
         self.koopa_frames = []
         self.x_vel = 1.5
@@ -24,8 +28,9 @@ class Koopa(Enemy):
     def update(self, game_time, viewport):
         time_delta = game_time - self.enemy_time
         if self.state == c.ENEMY_STATE_DEAD:
+            shell = Shell(self.rect.x - viewport, self.rect.y - 15, c.SHELL_GREEN)
+            self.shell_group.add(shell)
             self.kill()
-            # TODO replace dead koopa with shell
         elif self.state == c.ENEMY_STATE_ALIVE:
             if time_delta > 250:
                 if self.frame_idx == 0:

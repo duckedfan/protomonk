@@ -30,6 +30,7 @@ class Level():
         self.score_group = pygame.sprite.Group()
         self.brick_piece_group = pygame.sprite.Group()
         self.checkpoint_group = pygame.sprite.Group()
+        self.shell_group = pygame.sprite.Group()
 
         self.init_background()
         self.init_platforms()
@@ -43,7 +44,7 @@ class Level():
     def init_boxes(self):
         # TODO test enemies
         self.enemy_group.add(Goomba(800, 440))
-        #self.enemy_group.add(Koopa(700, 440))
+        self.enemy_group.add(Koopa(700, 440, self.shell_group))
 
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
@@ -202,6 +203,7 @@ class Level():
         self.brick_piece_group.update(game_time)
         self.powerup_group.update(game_time, self.viewport)
         self.enemy_group.update(game_time, self.viewport)
+        self.shell_group.update(game_time, self.viewport)
 
         for score in self.score_group:
             score.update(game_time)
@@ -211,6 +213,10 @@ class Level():
             if not powerup.emerging:
                 self.check_platform_collisions(powerup)
             self.check_player_powerup_collisions(powerup)
+
+        # shell collisions
+        for shell in self.shell_group:
+            self.check_platform_collisions(shell)
 
         # Enemy sprite checks
         for enemy in self.enemy_group:
@@ -273,7 +279,7 @@ class Level():
                 self.enemy_group.add(Goomba(6860, 440, c.DIR_LEFT))
                 self.enemy_group.add(Goomba(6920, 440, c.DIR_LEFT))
             if checkpoint.name == "koopa_set_1":
-                self.enemy_group.add(Koopa(4300, 440, c.DIR_LEFT))
+                self.enemy_group.add(Koopa(4300, 440, self.shell_group, c.DIR_LEFT))
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
@@ -315,6 +321,7 @@ class Level():
 
         self.enemy_group.draw(screen)
         self.brick_piece_group.draw(screen)
+        self.shell_group.draw(screen)
 
         if c.DEBUG:
             self.checkpoint_group.draw(screen)
