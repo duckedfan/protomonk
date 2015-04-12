@@ -7,6 +7,7 @@ from src.boxes.coin_box import CoinBox
 from src.boxes.brick_box import BrickBox
 from src.boxes.powerup_box import PowerupBox
 from src.enemies.goomba import Goomba
+from src.enemies.koopa import Koopa
 from checkpoint import Checkpoint
 from score import Score
 
@@ -42,6 +43,7 @@ class Level():
     def init_boxes(self):
         # TODO test enemies
         self.enemy_group.add(Goomba(800, 440))
+        #self.enemy_group.add(Koopa(700, 440))
 
         # Coin boxes
         self.coin_box_group = pygame.sprite.Group()
@@ -180,6 +182,8 @@ class Level():
         self.checkpoint_group.add(Checkpoint("goomba_set_6", 4720))
         self.checkpoint_group.add(Checkpoint("goomba_set_7", 6210))
 
+        self.checkpoint_group.add(Checkpoint("koopa_set_1", 3830))
+
     def update(self, game_time):
         if self.player.rect.right >= c.SCREEN_WIDTH_MID:
             diff = self.player.rect.right - c.SCREEN_WIDTH_MID
@@ -268,6 +272,8 @@ class Level():
             if checkpoint.name == "goomba_set_7":
                 self.enemy_group.add(Goomba(6860, 440, c.DIR_LEFT))
                 self.enemy_group.add(Goomba(6920, 440, c.DIR_LEFT))
+            if checkpoint.name == "koopa_set_1":
+                self.enemy_group.add(Koopa(4300, 440, c.DIR_LEFT))
 
     def check_platform_collisions(self, sprite):
         collisions_y = pygame.sprite.spritecollideany(sprite, self.platform_group)
